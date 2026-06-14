@@ -3,705 +3,2089 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced CSS Properties - Expert Level Guide</title>
+    <title>Ultimate CSS Engine Specifications - 15x15 Matrix</title>
     <style>
+        /* ==========================================================================
+           0. ULTRA PREMIUM CORE SYSTEM RESET & ROOT VARIABLES
+           ========================================================================== */
+        :root {
+            --bg-base: #0a0f1d;
+            --bg-surface: rgba(255, 255, 255, 0.03);
+            --border-premium: rgba(255, 255, 255, 0.08);
+            --neon-cyan: #00f2fe;
+            --neon-blue: #4facfe;
+            --neon-green: #00ff9d;
+            --text-primary: #f5f7fa;
+            --text-secondary: #9eabbf;
+            --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            
+            /* Animatable registered tokens fallback */
+            --computed-angle: 0deg;
+            --dynamic-glow: #0072ff;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: radial-gradient(circle at 50% 0%, #16223f 0%, var(--bg-base) 70%);
+            color: var(--text-primary);
             line-height: 1.6;
-            padding: 20px;
+            padding: 40px 20px;
             min-height: 100vh;
+            overflow-x: hidden;
         }
-        
+
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
         }
-        
+
+        /* Premium Header Styling */
         header {
             text-align: center;
-            padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            margin-bottom: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            padding: 60px 30px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%);
+            border: 1px solid var(--border-premium);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            margin-bottom: 60px;
+            position: relative;
         }
-        
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 10%; right: 10%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-green), transparent);
+        }
+
         h1 {
-            font-size: 3.5rem;
-            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            background: linear-gradient(135deg, #fff 0%, var(--text-secondary) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 15px;
-            text-shadow: 0 5px 15px rgba(0, 114, 255, 0.2);
+            margin-bottom: 20px;
         }
-        
+
         .subtitle {
-            font-size: 1.3rem;
-            color: #a0a0a0;
-            max-width: 800px;
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            max-width: 900px;
             margin: 0 auto;
         }
-        
-        .category-grid {
+
+        /* SPA Layout Framework */
+        .spa-view { display: none; }
+        .spa-view.active-view { display: block; }
+
+        /* Hub Grid Menu */
+        .hub-menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 30px;
-            margin-bottom: 50px;
         }
-        
-        .category-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+
+        .hub-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-premium);
+            border-radius: 20px;
+            padding: 35px 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
         }
-        
-        .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            border-color: rgba(0, 198, 255, 0.3);
+
+        .hub-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-8px);
+            background: rgba(0, 242, 254, 0.03);
+            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.1);
         }
-        
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.6s ease;
-        }
-        
-        .category-card:hover::before {
-            left: 100%;
-        }
-        
-        .category-title {
-            font-size: 1.8rem;
-            color: #00c6ff;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(0, 198, 255, 0.3);
+
+        .hub-card h3 {
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-        
-        .property-list {
+
+        .hub-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .btn-back {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-premium);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 40px;
+            transition: all 0.3s;
+        }
+        .btn-back:hover {
+            background: #fff;
+            color: var(--bg-base);
+            border-color: #fff;
+        }
+
+        /* Workspace Grid Matrix */
+        .matrix-panel {
+            background: rgba(10, 15, 29, 0.7);
+            border: 1px solid var(--border-premium);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 50px;
+            backdrop-filter: blur(20px);
+        }
+
+        .category-title-header {
+            font-size: 2.5rem;
+            color: var(--neon-cyan);
+            border-bottom: 1px solid var(--border-premium);
+            padding-bottom: 20px;
+            margin-bottom: 35px;
+        }
+
+        .property-engine-table {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 25px;
         }
-        
-        .property-item {
+
+        .property-row-node {
             background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #0072ff;
-            transition: all 0.3s ease;
-        }
-        
-        .property-item:hover {
-            background: rgba(0, 114, 255, 0.1);
-            transform: translateX(5px);
-        }
-        
-        .property-name {
-            font-family: 'Consolas', 'Monaco', monospace;
-            color: #00ff9d;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-        
-        .property-desc {
-            color: #b0b0b0;
-            font-size: 0.95rem;
-        }
-        
-        .demo-section {
-            margin: 60px 0;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .demo-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #00c6ff;
-            margin-bottom: 40px;
-        }
-        
-        .demo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        .demo-card {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
+            border-left: 5px solid var(--neon-blue);
+            border-radius: 0 16px 16px 0;
             padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255,255,255,0.02);
+            border-right: 1px solid rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.02);
         }
-        
-        .demo-card h3 {
-            color: #00ff9d;
+
+        .property-meta-info {
             margin-bottom: 15px;
-            font-size: 1.3rem;
         }
-        
-        .demo-element {
+
+        .meta-name {
+            font-family: var(--font-mono);
+            color: var(--neon-green);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .meta-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .value-chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .value-chip-spec {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-premium);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: #fff;
+            cursor: help;
+            transition: all 0.2s ease;
+        }
+
+        .value-chip-spec:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--text-secondary);
+        }
+
+        /* Visual Demo Sandbox Grid */
+        .visual-sandbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .sandbox-card {
+            background: #0d162a;
+            border: 1px solid var(--border-premium);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .sandbox-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+        }
+
+        .element-frame {
             width: 100%;
-            height: 200px;
-            margin: 20px 0;
+            height: 250px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
             position: relative;
             overflow: hidden;
+            border: 1px dashed rgba(255,255,255,0.1);
         }
+
+        /* ==========================================================================
+           1. HARDCORE STYLESHEET VALUES IMPLEMENTATION MATRIX (15x15 CONFIGURATION)
+           ========================================================================== */
+
+        /* --- CATEGORY 1: LAYOUT & GRID ARCHITECTURE --- */
+        .c1-p1-rows-auto { grid-template-rows: auto; }
+        .c1-p1-rows-fr { grid-template-rows: 1fr 2fr; }
+        .c1-p1-rows-minmax { grid-template-rows: minmax(100px, max-content); }
+        .c1-p1-rows-repeat { grid-template-rows: repeat(3, min-content); }
         
-        .code-block {
-            background: #1a1a2e;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 14px;
-            color: #00ff9d;
-            overflow-x: auto;
-            margin-top: 15px;
-            border: 1px solid rgba(0, 255, 157, 0.2);
+        .c1-p2-cols-fixed { grid-template-columns: 200px 400px; }
+        .c1-p2-cols-fit { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+        .c1-p2-cols-fill { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+        .c1-p2-cols-complex { grid-template-columns: max-content 1fr min-content; }
+
+        .c1-p3-flow-row { grid-auto-flow: row; }
+        .c1-p3-flow-col { grid-auto-flow: column; }
+        .c1-p3-flow-dense { grid-auto-flow: dense; }
+        .c1-p3-flow-col-dense { grid-auto-flow: column dense; }
+
+        .c1-p4-align-start { align-items: start; }
+        .c1-p4-align-end { align-items: end; }
+        .c1-p4-align-center { align-items: center; }
+        .c1-p4-align-stretch { align-items: stretch; }
+
+        .c1-p5-justify-start { justify-content: start; }
+        .c1-p5-justify-end { justify-content: end; }
+        .c1-p5-justify-center { justify-content: center; }
+        .c1-p5-justify-stretch { justify-content: stretch; }
+
+        .c1-p6-place-center { place-items: center; }
+        .c1-p6-place-start-stretch { place-items: start stretch; }
+
+        .c1-p7-gap-normal { gap: 20px; }
+        .c1-p7-gap-split { row-gap: 40px; column-gap: 10px; }
+
+        .c1-p8-subgrid-cols { grid-template-columns: subgrid; }
+        .c1-p8-subgrid-rows { grid-template-rows: subgrid; }
+        .c1-p8-subgrid-both { grid-template-columns: subgrid; grid-template-rows: subgrid; }
+
+        .c1-p9-area-head { grid-template-areas: "h h h" "m m s"; }
+        .c1-p9-area-null { grid-template-areas: none; }
+
+        .c1-p10-auto-rows-min { grid-auto-rows: min-content; }
+        .c1-p10-auto-rows-len { grid-auto-rows: 150px; }
+
+        .c1-p11-auto-cols-max { grid-auto-columns: max-content; }
+        .c1-p11-auto-cols-fr { grid-auto-columns: 0.5fr; }
+
+        .c1-p12-cq-inline { container-type: inline-size; container-name: bento; }
+        .c1-p12-cq-size { container-type: size; }
+        .c1-p12-cq-normal { container-type: normal; }
+
+        @container bento (min-width: 400px) { .c1-p13-cq-apply { background: var(--neon-green); color: #000; } }
+        @container bento (inline-size > 500px) { .c1-p14-cq-style { font-weight: bold; } }
+        @container bento (style(--theme: dark)) { .c1-p15-cq-experimental { border-color: red; } }
+
+        /* --- CATEGORY 2: FLEXBOX ENGINEERING ENGINE --- */
+        .c2-p1-disp-flex { display: flex; }
+        .c2-p1-disp-inline { display: inline-flex; }
+
+        .c2-p2-dir-row { flex-direction: row; }
+        .c2-p2-dir-rowbox { flex-direction: row-reverse; }
+        .c2-p2-dir-col { flex-direction: column; }
+        .c2-p2-dir-colbox { flex-direction: column-reverse; }
+
+        .c2-p3-wrap-no { flex-wrap: nowrap; }
+        .c2-p3-wrap-yes { flex-wrap: wrap; }
+        .c2-p3-wrap-rev { flex-wrap: wrap-reverse; }
+
+        .c2-p4-jc-start { justify-content: flex-start; }
+        .c2-p4-jc-end { justify-content: flex-end; }
+        .c2-p4-jc-center { justify-content: center; }
+        .c2-p4-jc-between { justify-content: space-between; }
+        .c2-p4-jc-around { justify-content: space-around; }
+        .c2-p4-jc-evenly { justify-content: space-evenly; }
+
+        .c2-p5-ai-start { align-items: flex-start; }
+        .c2-p5-ai-end { align-items: flex-end; }
+        .c2-p5-ai-center { align-items: center; }
+        .c2-p5-ai-baseline { align-items: baseline; }
+        .c2-p5-ai-stretch { align-items: stretch; }
+
+        .c2-p6-as-auto { align-self: auto; }
+        .c2-p6-as-center { align-self: center; }
+        .c2-p6-as-stretch { align-self: stretch; }
+
+        .c2-p7-ac-start { align-content: flex-start; }
+        .c2-p7-ac-between { align-content: space-between; }
+        .c2-p7-ac-stretch { align-content: stretch; }
+
+        .c2-p8-grow-zero { flex-grow: 0; }
+        .c2-p8-grow-one { flex-grow: 1; }
+        .c2-p8-grow-two { flex-grow: 2; }
+
+        .c2-p9-shrink-zero { flex-shrink: 0; }
+        .c2-p9-shrink-one { flex-shrink: 1; }
+
+        .c2-p10-basis-auto { flex-basis: auto; }
+        .c2-p10-basis-zero { flex-basis: 0; }
+        .c2-p10-basis-px { flex-basis: 300px; }
+
+        .c2-p11-shorthand-initial { flex: 0 1 auto; }
+        .c2-p11-shorthand-none { flex: none; }
+        .c2-p11-shorthand-flexy { flex: 1 1 100%; }
+
+        .c2-p12-ord-neg { order: -1; }
+        .c2-p12-ord-zero { order: 0; }
+        .c2-p12-ord-pos { order: 999; }
+
+        .c2-p13-gap-len { gap: 15px; }
+        .c2-p13-gap-pct { gap: 5%; }
+
+        .c2-p14-rowgap-set { row-gap: 25px; }
+        .c2-p15-colgap-set { column-gap: 12px; }
+
+        /* --- CATEGORY 3: ADVANCED TRANSFORM & 3D GRAPHICS --- */
+        .c3-p1-style-3d { transform-style: preserve-3d; }
+        .c3-p1-style-flat { transform-style: flat; }
+
+        .c3-p2-pers-deep { perspective: 200px; }
+        .c3-p2-pers-mid { perspective: 600px; }
+        .c3-p2-pers-none { perspective: none; }
+
+        .c3-p3-backface-hide { backface-visibility: hidden; }
+        .c3-p3-backface-show { backface-visibility: visible; }
+
+        .c3-p4-origin-tl { transform-origin: top left; }
+        .c3-p4-origin-c { transform-origin: center; }
+        .c3-p4-origin-3d { transform-origin: 50% 50% -100px; }
+
+        .c3-p5-trans-3d { transform: translate3d(20px, -10px, 50px); }
+        .c3-p6-scale-3d { transform: scale3d(1.5, 1.5, 0.5); }
+        .c3-p7-rot-3d { transform: rotate3d(1, 1, 1, 45deg); }
+        .c3-p8-matrix-3d { transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,50,100,0,1); }
+
+        .c3-p9-pers-org-top { perspective-origin: top; }
+        .c3-p9-pers-org-bl { perspective-origin: bottom left; }
+
+        .c3-p10-scale-x { transform: scaleX(1.2); }
+        .c3-p11-scale-y { transform: scaleY(0.8); }
+        .c3-p12-rot-x { transform: rotateX(60deg); }
+        .c3-p13-rot-y { transform: rotateY(180deg); }
+        .c3-p14-skew-x { transform: skewX(15deg); }
+        .c3-p15-skew-y { transform: skewY(-10deg); }
+
+        /* --- CATEGORY 4: ANIMATION ENGINE & BEZIER SYSTEMS --- */
+        .c4-p1-fill-fwd { animation-fill-mode: forwards; }
+        .c4-p1-fill-bwd { animation-fill-mode: backwards; }
+        .c4-p1-fill-both { animation-fill-mode: both; }
+        .c4-p1-fill-none { animation-fill-mode: none; }
+
+        .c4-p2-steps-start { animation-timing-function: steps(4, start); }
+        .c4-p2-steps-end { animation-timing-function: steps(4, end); }
+        .c4-p2-steps-jnone { animation-timing-function: steps(2, jump-none); }
+        .c4-p2-steps-jboth { animation-timing-function: steps(2, jump-both); }
+
+        .c4-p3-will-gpu { will-change: transform, opacity; }
+        .c4-p3-will-scroll { will-change: scroll-position; }
+
+        .c4-p4-bezier-linear { animation-timing-function: cubic-bezier(0,0,1,1); }
+        .c4-p4-bezier-smooth { animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); }
+        .c4-p4-bezier-bounce { animation-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6); }
+
+        .c4-p5-dir-norm { animation-direction: normal; }
+        .c4-p5-dir-rev { animation-direction: reverse; }
+        .c4-p5-dir-alt { animation-direction: alternate; }
+        .c4-p5-dir-altrev { animation-direction: alternate-reverse; }
+
+        .c4-p6-play-run { animation-play-state: running; }
+        .c4-p6-play-pause { animation-play-state: paused; }
+
+        .c4-p7-iter-count { animation-iteration-count: infinite; }
+        .c4-p7-iter-one { animation-iteration-count: 1; }
+
+        .c4-p8-dur-fast { animation-duration: 200ms; }
+        .c4-p8-dur-slow { animation-duration: 5s; }
+
+        .c4-p9-delay-set { animation-delay: 1s; }
+        .c4-p10-name-bind { animation-name: pulse-glow; }
+
+        .c4-p11-trans-prop-all { transition-property: all; }
+        .c4-p11-trans-prop-iso { transition-property: transform; }
+        .c4-p12-trans-dur { transition-duration: 400ms; }
+        .c4-p13-trans-delay { transition-delay: 100ms; }
+        .c4-p14-trans-tf-apple { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+        .c4-p15-shorthand-matrix { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s; }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.4); }
+            100% { box-shadow: 0 0 0 20px transparent; }
         }
+
+        /* --- CATEGORY 5: CLIP PATH & VISUAL BLENDING MASKING --- */
+        .c5-p1-clip-poly { clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); }
+        .c5-p1-clip-circ { clip-path: circle(50% at center); }
+        .c5-p1-clip-inset { clip-path: inset(10px 20px rounded 12px); }
+
+        .c5-p2-mix-mult { mix-blend-mode: multiply; }
+        .c5-p2-mix-scr { mix-blend-mode: screen; }
+        .c5-p2-mix-ovr { mix-blend-mode: overlay; }
+        .c5-p2-mix-diff { mix-blend-mode: difference; }
+
+        .c5-p3-bgblend-lum { background-blend-mode: luminosity; }
+        .c5-p3-bgblend-soft { background-blend-mode: soft-light; }
+
+        .c5-p4-isolate-on { isolation: isolate; }
+        .c5-p4-isolate-auto { isolation: auto; }
+
+        .c5-p5-mask-grad { mask-image: linear-gradient(black, transparent); -webkit-mask-image: linear-gradient(black, transparent); }
+        .c5-p6-mask-mode-alpha { mask-mode: alpha; }
+        .c5-p7-mask-repeat-no { mask-repeat: no-repeat; }
+        .c5-p8-mask-pos-center { mask-position: center; }
+        .c5-p9-mask-size-cover { mask-size: cover; }
+        .c5-p10-mask-clip-border { mask-clip: border-box; }
+        .c5-p11-mask-org-content { mask-origin: content-box; }
+        .c5-p12-mask-comp-add { mask-composite: add; }
         
-        .css-selector {
-            color: #ff6b9d;
-        }
+        .c5-p13-clip-rule-evenodd { clip-rule: evenodd; }
+        .c5-p14-box-decor-slice { box-decoration-break: slice; -webkit-box-decoration-break: slice; }
+        .c5-p15-box-decor-clone { box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+        /* --- CATEGORY 6: COMPLEX FILTER ARCHITECTURE --- */
+        .c6-p1-bf-blur { backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); }
+        .c6-p1-bf-sat { backdrop-filter: saturate(200%); -webkit-backdrop-filter: saturate(200%); }
+        .c6-p1-bf-mixed { backdrop-filter: blur(10px) brightness(80%); -webkit-backdrop-filter: blur(10px) brightness(80%); }
+
+        .c6-p2-ds-clean { filter: drop-shadow(0 10px 20px rgba(0,242,254,0.3)); }
+        .c6-p2-ds-multi { filter: drop-shadow(3px 3px red) drop-shadow(-3px -3px blue); }
+
+        .c6-p3-clip-text { -webkit-background-clip: text; background-clip: text; }
+        .c6-p4-fill-trans { -webkit-text-fill-color: transparent; }
+
+        .c6-p5-shape-outside-circ { shape-outside: circle(50%); float: left; width: 100px; height: 100px; }
+        .c6-p6-shape-margin { shape-margin: 20px; }
+        .c6-p7-shape-image-threshold { shape-image-threshold: 0.5; }
+
+        .c6-p8-filt-blur { filter: blur(5px); }
+        .c6-p9-filt-brightness { filter: brightness(1.5); }
+        .c6-p10-filt-contrast { filter: contrast(200%); }
+        .c6-p11-filt-grayscale { filter: grayscale(100%); }
+        .c6-p12-filt-hue { filter: hue-rotate(90deg); }
+        .c6-p13-filt-invert { filter: invert(1); }
+        .c6-p14-filt-opacity { filter: opacity(0.5); }
+        .c6-p15-filt-sepia { filter: sepia(0.8); }
+
+        /* --- CATEGORY 7: DYNAMIC CSS CUSTOM PROPERTIES MAPPING --- */
+        .c7-p1-var-basic { color: var(--text-primary); }
+        .c7-p2-var-fallback { color: var(--undefined-token, var(--neon-cyan)); }
+        .c7-p3-var-nested { border-color: var(--border-color, var(--border-premium)); }
         
-        .css-property {
-            color: #00c6ff;
+        .c7-p4-calc-add { width: calc(100% - 40px); }
+        .c7-p5-calc-mult { padding: calc(var(--computed-angle) * 2); }
+        .c7-p6-calc-mixed { margin-top: calc(5vh + 10px - 2rem); }
+
+        @property --computed-angle {
+            syntax: '<angle>';
+            inherits: false;
+            initial-value: 0deg;
         }
+        @property --dynamic-glow {
+            syntax: '<color>';
+            inherits: true;
+            initial-value: #0072ff;
+        }
+        .c7-p7-property-syntax { --computed-angle: 45deg; }
+        .c7-p8-property-inherit { --dynamic-glow: #00ff9d; }
+
+        .c7-p9-min-math { width: min(400px, 100%); }
+        .c7-p10-max-math { width: max(200px, 50%); }
+        .c7-p11-clamp-math { width: clamp(200px, 30vw, 800px); }
+        .c7-p12-env-safe-top { padding-top: env(safe-area-inset-top, 20px); }
+        .c7-p13-env-safe-bottom { padding-bottom: env(safe-area-inset-bottom, 20px); }
+        .c7-p14-env-safe-left { padding-left: env(safe-area-inset-left, 0px); }
+        .c7-p15-env-safe-right { padding-right: env(safe-area-inset-right, 0px); }
+
+        /* --- CATEGORY 8: MODERN PRESETS & FLEXIBLE ASPECT RATIOS --- */
+        .c8-p1-aspect-sq { aspect-ratio: 1 / 1; }
+        .c8-p1-aspect-vid { aspect-ratio: 16 / 9; }
+        .c8-p1-aspect-gold { aspect-ratio: 1.618 / 1; }
+
+        .c8-p2-snap-xm { scroll-snap-type: x mandatory; }
+        .c8-p2-snap-yp { scroll-snap-type: y proximity; }
+        .c8-p2-snap-both { scroll-snap-type: both always; }
+
+        .c8-p3-align-start { scroll-snap-align: start; }
+        .c8-p3-align-center { scroll-snap-align: center; }
+        .c8-p3-align-end { scroll-snap-align: end; }
+
+        .c8-p4-snap-stop-always { scroll-snap-stop: always; }
+        .c8-p4-snap-stop-normal { scroll-snap-stop: normal; }
+
+        .c8-p5-supports-subgrid { @supports (display: grid) and (grid-template-columns: subgrid) { background: rgba(0,255,157,0.05); } }
+        .c8-p6-supports-not { @supports not (display: flex) { display: block; } }
+        .c8-p7-supports-or { @supports (display: flex) or (display: grid) { border-width: 1px; } }
+
+        .c8-p8-accent-green { accent-color: var(--neon-green); }
+        .c8-p9-accent-cyan { accent-color: var(--neon-cyan); }
+
+        .c8-p10-scrollbar-stable { scrollbar-gutter: stable; }
+        .c8-p11-scrollbar-both { scrollbar-gutter: stable both-edges; }
+        .c8-p12-scrollbar-width-thin { scrollbar-width: thin; }
+        .c8-p13-scrollbar-width-none { scrollbar-width: none; }
+        .c8-p14-scrollbar-color-set { scrollbar-color: var(--neon-cyan) transparent; }
+        .c8-p15-scroll-behavior-smooth { scroll-behavior: smooth; }
+
+        /* --- CATEGORY 9: RENDER PIPELINE PERFORMANCE CONSTS --- */
+        .c9-p1-cv-auto { content-visibility: auto; }
+        .c9-p1-cv-hidden { content-visibility: hidden; }
+        .c9-p1-cv-visible { content-visibility: visible; }
+
+        .c9-p2-cis-len { contain-intrinsic-size: 0 400px; }
+        .c9-p2-cis-auto { contain-intrinsic-size: auto 200px; }
+
+        .c9-p3-contain-strict { contain: strict; }
+        .c9-p3-contain-content { contain: content; }
+        .c9-p3-contain-paint { contain: paint; }
+        .c9-p3-contain-layout { contain: layout; }
+        .c9-p3-contain-size { contain: size; }
+
+        .c9-p4-image-rendering-pixel { image-rendering: pixelated; }
+        .c9-p4-image-rendering-crisp { image-rendering: crisp-edges; }
         
-        .css-value {
-            color: #ffd166;
-        }
+        .c9-p5-back-filter-gpu { transform: translateZ(0); }
+        .c9-p6-text-rendering-speed { text-rendering: optimizeSpeed; }
+        .c9-p7-text-rendering-legibility { text-rendering: optimizeLegibility; }
         
-        /* Advanced CSS Demo Styles */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            padding: 20px;
-            background: linear-gradient(45deg, #1a1a2e, #16213e);
-        }
+        .c9-p8-contain-intrinsic-width { contain-intrinsic-width: 300px; }
+        .c9-p9-contain-intrinsic-height { contain-intrinsic-height: 500px; }
+        .c9-p10-contain-intrinsic-inline { contain-intrinsic-inline-size: auto 100px; }
+        .c9-p11-contain-intrinsic-block { contain-intrinsic-block-size: auto 150px; }
+        .c9-p12-will-change-opacity { will-change: opacity; }
+        .c9-p13-will-change-contents { will-change: contents; }
+        .c9-p14-paint-order-normal { paint-order: normal; }
+        .c9-p15-paint-order-markers { paint-order: stroke fill markers; }
+
+        /* --- CATEGORY 10: RESPONSIVE FLUID TYPOGRAPHY --- */
+        .c10-p1-clamp-font { font-size: clamp(1.5rem, 4vw + 1rem, 4rem); }
+        .c10-p2-font-palette-dark { font-palette: --dark-matrix; }
+        .c10-p3-underline-offset-px { text-underline-offset: 8px; }
         
-        .grid-item {
-            background: linear-gradient(45deg, #0072ff, #00c6ff);
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            color: white;
-            font-weight: bold;
-        }
+        .c10-p4-skip-ink-auto { text-decoration-skip-ink: auto; }
+        .c10-p4-skip-ink-none { text-decoration-skip-ink: none; }
+
+        .c10-p5-font-synthesis-none { font-synthesis: none; }
+        .c10-p6-font-synthesis-weight { font-synthesis: weight; }
+        .c10-p7-font-kerning-normal { font-settings: normal; font-kerning: normal; }
+        .c10-p8-font-variant-caps-small { font-variant-caps: small-caps; }
+        .c10-p9-font-optical-sizing-auto { font-optical-sizing: auto; }
+        .c10-p10-text-justify-interword { text-justify: inter-word; text-align: justify; }
+        .c10-p11-text-orientation-mixed { text-orientation: mixed; }
+        .c10-p12-text-overflow-ellipsis { text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+        .c10-p13-line-break-strict { line-break: strict; }
+        .c10-p14-word-break-all { word-break: break-all; }
+        .c10-p15-hyphens-auto { hyphens: auto; }
+
+        /* --- CATEGORY 11: ARCHITECTURAL ANCHOR POSITIONING --- */
+        .c11-p1-anchor-src { anchor-name: --popover-anchor; }
         
-        .clip-path-demo {
-            background: linear-gradient(45deg, #ff6b9d, #ffd166);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        .c11-p2-inset-area-top { position: absolute; position-anchor: --popover-anchor; inset-area: top; }
+        .c11-p2-inset-area-bottom { position: absolute; position-anchor: --popover-anchor; inset-area: bottom; }
+        .c11-p2-inset-area-right { position: absolute; position-anchor: --popover-anchor; inset-area: right; }
+
+        .c11-p3-try-flip-block { position-try-options: flip-block; }
+        .c11-p3-try-flip-inline { position-try-options: flip-inline; }
+
+        .c11-p4-anchor-center { top: anchor(--popover-anchor center); }
+        .c11-p5-anchor-top { top: anchor(--popover-anchor top); }
+        .c11-p6-anchor-bottom { bottom: anchor(--popover-anchor bottom); }
+        .c11-p7-anchor-left { left: anchor(--popover-anchor left); }
+        .c11-p8-anchor-right { right: anchor(--popover-anchor right); }
+        .c11-p9-anchor-size-width { width: anchor-size(--popover-anchor width); }
+        .c11-p10-anchor-size-height { height: anchor-size(--popover-anchor height); }
+        .c11-p11-position-visibility-always { position-visibility: always; }
+        .c11-p12-position-visibility-anchored { position-visibility: anchors-visible; }
+        .c11-p13-position-try-order-normal { position-try-order: normal; }
+        .c11-p14-position-try-order-most-space { position-try-order: most-space; }
+        .c11-p15-anchor-size-max { max-width: anchor-size(--popover-anchor max-width); }
+
+        /* --- CATEGORY 12: SCROLL TIMELINES & CAPABILITIES --- */
+        .c12-p1-scroll-timeline-y { scroll-timeline-name: --main-timeline; scroll-timeline-axis: y; }
+        .c12-p1-scroll-timeline-x { scroll-timeline-name: --main-timeline; scroll-timeline-axis: x; }
+
+        .c12-p2-view-timeline-block { view-timeline-name: --reveal-node; view-timeline-axis: block; }
+
+        .c12-p3-overscroll-contain { overscroll-behavior: contain; }
+        .c12-p3-overscroll-none { overscroll-behavior: none; }
+        .c12-p3-overscroll-auto { overscroll-behavior: auto; }
+
+        .c12-p4-scroll-margin-top { scroll-margin-top: 100px; }
+        .c12-p5-scroll-padding-inline { scroll-padding-inline: 40px; }
+        .c12-p6-overscroll-behavior-x-none { overscroll-behavior-x: none; }
+        .c12-p7-overscroll-behavior-y-contain { overscroll-behavior-y: contain; }
+        .c12-p8-scroll-margin-bottom { scroll-margin-bottom: 50px; }
+        .c12-p9-scroll-margin-left { scroll-margin-left: 20px; }
+        .c12-p10-scroll-margin-right { scroll-margin-right: 20px; }
+        .c12-p11-scroll-padding-top { scroll-padding-top: 30px; }
+        .c12-p12-scroll-padding-bottom { scroll-padding-bottom: 30px; }
+        .c12-p13-scroll-padding-left { scroll-padding-left: 10px; }
+        .c12-p14-scroll-padding-right { scroll-padding-right: 10px; }
+        .c12-p15-scroll-timeline-axis-inline { scroll-timeline-axis: inline; }
+
+        /* --- CATEGORY 13: ADVANCED SPECTRUMS & HOUDINI LAYERS --- */
+        .c13-p1-color-p3-green { background-color: color(display-p3 0.0 1.0 0.0); }
+        .c13-p1-color-p3-crimson { background-color: color(display-p3 1.0 0.0 0.0); }
+
+        .c13-p2-mask-comp-intersect { mask-composite: intersect; }
+        .c13-p2-mask-comp-exclude { mask-composite: exclude; }
+
+        .c13-p3-paint-ripple { background-image: paint(ripple-worklet); }
+        .c13-p4-color-rec2020 { background-color: color(rec2020 0.1 0.9 0.1); }
+        .c13-p5-color-srgb-linear { background-color: color(srgb-linear 0.5 0.5 0.5); }
+        .c13-p6-color-xyz { background-color: color(xyz 0.4 0.4 0.4); }
+        .c13-p7-mask-composite-subtract { mask-composite: subtract; }
+        .c13-p8-mask-composite-add { mask-composite: add; }
+        .c13-p9-paint-grid-custom { background-image: paint(grid-pattern, 20px); }
+        .c13-p10-paint-circle-custom { background-image: paint(fluid-circle); }
+        .c13-p11-color-mix-hsl { background-color: color-mix(in hsl, red 30%, blue); }
+        .c13-p12-color-mix-oklab { background-color: color-mix(in oklab, var(--neon-cyan) 70%, black); }
+        .c13-p13-color-mix-srgb { background-color: color-mix(in srgb, white, transparent); }
+        .c13-p14-forced-color-adjust-none { forced-color-adjust: none; }
+        .c13-p15-forced-color-adjust-auto { forced-color-adjust: auto; }
+
+        /* --- CATEGORY 14: PHYSICAL INTERFACE DEVICE CAPABILITIES --- */
+        @media (dynamic-range: high) { .c14-p1-hdr-panel { border-color: var(--neon-green); box-shadow: 0 0 30px var(--neon-green); } }
+        @media (dynamic-range: standard) { .c14-p1-hdr-panel { border-color: var(--border-premium); } }
+
+        @media (prefers-reduced-motion: reduce) { 
+            .c14-p2-motion-safe { animation: none !important; transition: none !important; } 
         }
-        
-        .blend-mode-demo {
-            background: linear-gradient(45deg, #0072ff, #00c6ff);
-            position: relative;
+        @media (prefers-reduced-motion: no-preference) {
+            .c14-p2-motion-safe { animation: pulse-glow 2s infinite; }
         }
-        
-        .blend-mode-demo::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #ff6b9d, #ffd166);
-            mix-blend-mode: multiply;
-            opacity: 0.7;
-        }
-        
-        .mask-demo {
-            background: linear-gradient(45deg, #0072ff, #00c6ff);
-            -webkit-mask: radial-gradient(circle at center, transparent 30%, black 70%);
-            mask: radial-gradient(circle at center, transparent 30%, black 70%);
-        }
-        
-        .filter-demo {
-            background: linear-gradient(45deg, #0072ff, #00c6ff);
-            filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.5)) hue-rotate(45deg);
-        }
-        
-        .transform-3d-demo {
-            background: linear-gradient(45deg, #0072ff, #00c6ff);
-            transform: perspective(500px) rotateX(15deg) rotateY(15deg);
-            transform-style: preserve-3d;
-        }
-        
-        .container-query-demo {
-            background: linear-gradient(45deg, #0072ff, #00c6ff);
-            container-type: inline-size;
-        }
-        
-        @container (min-width: 300px) {
-            .container-query-demo {
-                background: linear-gradient(45deg, #ff6b9d, #ffd166);
-            }
-        }
-        
-        .scroll-snap-demo {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 10px;
-            padding: 20px;
-            background: #1a1a2e;
-        }
-        
-        .scroll-item {
-            flex: 0 0 150px;
-            height: 150px;
-            background: linear-gradient(45deg, #0072ff, #00c6ff);
-            border-radius: 10px;
-            scroll-snap-align: start;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-        
-        .variable-demo {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            --primary-color: #0072ff;
-            --secondary-color: #00c6ff;
-        }
-        
-        .backdrop-demo {
-            background: linear-gradient(45deg, #0072ff, #00c6ff);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-        }
-        
-        .aspect-ratio-demo {
-            background: linear-gradient(45deg, #0072ff, #00c6ff);
-            aspect-ratio: 16/9;
-            width: 100%;
-        }
-        
-        .highlight {
-            background: linear-gradient(90deg, transparent, rgba(0, 198, 255, 0.1), transparent);
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 40px;
-            margin-top: 60px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .skill-level {
-            display: inline-block;
-            padding: 5px 15px;
-            background: linear-gradient(45deg, #0072ff, #00c6ff);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
+
+        @media (hover: hover) { .c14-p3-hover-hardware:hover { background: var(--neon-cyan); color: #000; } }
+        @media (hover: none) { .c14-p3-hover-hardware { border: 2px dashed var(--neon-blue); } }
+
+        @media (pointer: coarse) { .c14-p4-pointer-ui { padding: 25px; } }
+        @media (pointer: fine) { .c14-p4-pointer-ui { padding: 10px; } }
+        @media (pointer: none) { .c14-p4-pointer-ui { display: none; } }
+
+        @media (prefers-color-scheme: dark) { .c14-p5-scheme-node { background: #000; } }
+        @media (prefers-color-scheme: light) { .c14-p5-scheme-node { background: #fff; } }
+
+        @media (prefers-contrast: more) { .c14-p6-contrast-node { border-width: 3px; } }
+        @media (prefers-contrast: less) { .c14-p6-contrast-node { border-width: 0.5px; } }
+        @media (prefers-contrast: no-preference) { .c14-p6-contrast-node { border-width: 1px; } }
+
+        @media (display-mode: standalone) { .c14-p7-display-mode { margin-top: 0; } }
+        @media (display-mode: browser) { .c14-p7-display-mode { margin-top: 20px; } }
+        @media (display-mode: fullscreen) { .c14-p7-display-mode { padding: 0; } }
+        @media (display-mode: minimal-ui) { .c14-p7-display-mode { padding: 5px; } }
+
+        @media (color-gamut: p3) { .c14-p8-gamut-node { color: color(display-p3 0 1 0); } }
+        @media (color-gamut: srgb) { .c14-p8-gamut-node { color: rgb(0, 255, 0); } }
+        @media (color-gamut: rec2020) { .c14-p8-gamut-node { color: color(rec2020 0 1 0); } }
+
+        @media (inverted-colors: inverted) { .c14-p9-inverted-node { filter: invert(1); } }
+        @media (inverted-colors: none) { .c14-p9-inverted-node { filter: none; } }
+
+        @media (any-hover: hover) { .c14-p10-anyhover-node { cursor: pointer; } }
+        @media (any-hover: none) { .c14-p10-anyhover-node { cursor: default; } }
+
+        @media (any-pointer: coarse) { .c14-p11-anypointer-node { min-height: 48px; } }
+        @media (any-pointer: fine) { .c14-p11-anypointer-node { min-height: 24px; } }
+        @media (any-pointer: none) { .c14-p11-anypointer-node { min-height: auto; } }
+
+        @media (scripting: enabled) { .c14-p12-script-node { display: block; } }
+        @media (scripting: none) { .c14-p12-script-node { display: none; } }
+        @media (scripting: initial-only) { .c14-p12-script-node { opacity: 0.5; } }
+
+        @media (grid: 0) { .c14-p13-media-grid-node { display: block; } }
+        @media (grid: 1) { .c14-p13-media-grid-node { font-family: monospace; } }
+
+        @media (update: fast) { .c14-p14-update-node { transition: all 0.2s; } }
+        @media (update: slow) { .c14-p14-update-node { transition: none; } }
+        @media (update: none) { .c14-p14-update-node { border: 1px solid #fff; } }
+
+        @media (orientation: landscape) { .c14-p15-orient-node { flex-direction: row; } }
+        @media (orientation: portrait) { .c14-p15-orient-node { flex-direction: column; } }
+
+        /* --- CATEGORY 15: HIGH-FIDELITY ELITE COMPONENT TOKENS --- */
+        .c15-p1-btn-glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); color: #fff; }
+        .c15-p2-btn-shimmer { background: linear-gradient(90deg, #0072ff, #00f2fe, #00ff9d, #0072ff); background-size: 300% 100%; border: none; }
+        .c15-p3-btn-neon { background: transparent; border: 2px solid var(--neon-green); color: var(--neon-green); box-shadow: 0 0 15px rgba(0,255,157,0.2); }
+        .c15-p4-card-bento { background: rgba(255,255,255,0.01); border: 1px solid var(--border-premium); border-radius: 24px; padding: 30px; }
+        .c15-p5-text-gradient { background: linear-gradient(45deg, var(--neon-cyan), var(--neon-green)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .c15-p6-panel-blur { backdrop-filter: blur(30px) saturate(150%); background: rgba(10,15,29,0.5); }
+        .c15-p7-glow-active { box-shadow: 0 0 40px rgba(0, 242, 254, 0.4); border-color: var(--neon-cyan); }
+        .c15-p8-border-gradient { border: 1px solid transparent; background: linear-gradient(var(--bg-base), var(--bg-base)) padding-box, linear-gradient(45deg, red, blue) border-box; }
+        .c15-p9-mask-reveal { mask-image: radial-gradient(circle at center, black 100%, transparent 100%); }
+        .c15-p10-3d-lift { transform: perspective(1000px) translateZ(20px); transition: transform 0.3s; }
+        .c15-p10-3d-lift:hover { transform: perspective(1000px) translateZ(50px) rotateY(10deg); }
+        .c15-p11-shadow-ambient { box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1); }
+        .c15-p12-scroller-hidden { scrollbar-width: none; overflow-y: scroll; }
+        .c15-p13-aspect-hero { aspect-ratio: 21 / 9; }
+        .c15-p14-isolation-layer { isolation: isolate; z-index: 1; }
+        .c15-p15-willchange-render { will-change: transform; transform: translate3d(0,0,0); }
     </style>
 </head>
 <body>
     <div class="container">
+        
         <header>
-            <h1>Advanced CSS Properties</h1>
-            <p class="subtitle">Essential CSS properties every expert-level developer must master for modern web development</p>
+            <h1>Engine Architecture Blueprint</h1>
+<p class="subtitle">
+    Click any 
+    <span style="cursor: pointer; color: #00ff9d; font-weight: 700; border-bottom: 2px solid #00ff9d; transition: 0.3s;" 
+          onmouseover="this.style.color='#fff'; this.style.borderColor='#fff';" 
+          onmouseout="this.style.color='#00ff9d'; this.style.borderColor='#00ff9d';">
+          Property Value
+    </span> 
+    to instantly view its official 
+    <span style="cursor: pointer; color: #00c6ff; font-weight: 700; border-bottom: 2px solid #00c6ff; transition: 0.3s;" 
+          onmouseover="this.style.color='#fff'; this.style.borderColor='#fff';" 
+          onmouseout="this.style.color='#00c6ff'; this.style.borderColor='#00c6ff';">
+          MDN Documentation
+    </span>.
+</p>
         </header>
-        
-        <div class="category-grid">
-            <!-- Layout & Grid -->
-            <div class="category-card">
-                <h2 class="category-title">📐 Layout & Grid</h2>
-                <div class="property-list">
-                    <div class="property-item">
-                        <div class="property-name">display: grid;</div>
-                        <div class="property-desc">CSS Grid Layout - two-dimensional layout system</div>
+
+        <main id="mainHubView" class="spa-view active-view">
+            <div class="hub-menu-grid">
+                <div class="hub-card" data-cat="layout-grid"><h3>📐 1. Layout & Grid</h3><p>Rows, Columns, dense flows, subgrids, size-based container queries.</p></div>
+                <div class="hub-card" data-cat="flexbox-eng"><h3>⚡ 2. Flexbox Engineering</h3><p>Direction constraints, baseline aligns, structural growths, precise axis gaps.</p></div>
+                <div class="hub-card" data-cat="transform-3d"><h3>🎭 3. Transform & 3D Vector</h3><p>Matrix3d mappings, spatial perspective depths, custom coordinate origins.</p></div>
+                <div class="hub-card" data-cat="anim-engine"><h3>🎬 4. Animation Engine</h3><p>Jump-step timing models, multi-layered beziers, running states.</p></div>
+                <div class="hub-card" data-cat="clip-mask"><h3>🎨 5. Clip Path & Masking</h3><p>Geometric shape slicing, alpha mask gradients, composites rules.</p></div>
+                <div class="hub-card" data-cat="complex-filter"><h3>✨ 6. Complex Filters</h3><p>Backdrop-blur configurations, multi-layered hardware dropshadows.</p></div>
+                <div class="hub-card" data-cat="custom-props"><h3>🎯 7. Custom Properties</h3><p>Recursive pointer chaining, math calc engines, low-level @property maps.</p></div>
+                <div class="hub-card" data-cat="modern-presets"><h3>🚀 8. Modern Presets</h3><p>Golden ratios, mandatory axis snaps, stable gutter allocations.</p></div>
+                <div class="hub-card" data-cat="render-pipeline"><h3>⚙️ 9. Render Pipeline</h3><p>Content visibility automation, paint order structures, box constraints.</p></div>
+                <div class="hub-card" data-cat="fluid-typo"><h3>👑 10. Fluid Typography</h3><p>Clamp sizing math, text-decoration skip parameters, caps variations.</p></div>
+                <div class="hub-card" data-cat="anchor-pos"><h3>🗺️ 11. Anchor Positioning</h3><p>Dashed identifier targets, structural position try options, inset areas.</p></div>
+                <div class="hub-card" data-cat="scroll-timeline"><h3>🖱️ 12. Scroll Timelines</h3><p>Chronological axis bindings, horizontal scroll locks, padding guards.</p></div>
+                <div class="hub-card" data-cat="advanced-gamut"><h3>🌑 13. Advanced Gamuts</h3><p>Display-P3 ultra wide spectrums, color mixes, canvas Houdini worklets.</p></div>
+                <div class="hub-cat-trigger hub-card" data-cat="device-caps"><h3>📱 14. Device Capabilities</h3><p>HDR indicators, pointer precision controls, media query hardware filters.</p></div>
+                <div class="hub-card" data-cat="elite-components"><h3>💎 15. Elite Components</h3><p>Ambient depth bento arrays, text gradient vectors, alpha shimmer panels.</p></div>
+            </div>
+        </main>
+
+        <main id="workspaceView" class="spa-view">
+            <button id="btnBack" class="btn-back">← Back to Selection Hub</button>
+
+            <div class="matrix-panel category-view-node" id="cat-layout-grid">
+                <h2 class="category-title-header">📐 1. Layout & Grid Architecture</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">grid-template-rows</div><div class="meta-desc">Explicit vertical track generation engine.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p1-rows-auto">auto</div>
+                            <div class="value-chip-spec c1-p1-rows-fr">1fr 2fr</div>
+                            <div class="value-chip-spec c1-p1-rows-minmax">minmax(100px, max-content)</div>
+                            <div class="value-chip-spec c1-p1-rows-repeat">repeat(3, min-content)</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">grid-template-areas</div>
-                        <div class="property-desc">Define grid areas with semantic names</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">grid-template-columns</div><div class="meta-desc">Horizontal tracking matrices bounds.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p2-cols-fixed">200px 400px</div>
+                            <div class="value-chip-spec c1-p2-cols-fit">repeat(auto-fit, minmax(150px, 1fr))</div>
+                            <div class="value-chip-spec c1-p2-cols-fill">repeat(auto-fill, minmax(100px, 1fr))</div>
+                            <div class="value-chip-spec c1-p2-cols-complex">max-content 1fr min-content</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">grid-auto-flow: dense;</div>
-                        <div class="property-desc">Auto-placement with backtracking to fill holes</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">grid-auto-flow</div><div class="meta-desc">Algorithmic packing engine behavior for unplaced blocks.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p3-flow-row">row</div>
+                            <div class="value-chip-spec c1-p3-flow-col">column</div>
+                            <div class="value-chip-spec c1-p3-flow-dense">dense</div>
+                            <div class="value-chip-spec c1-p3-flow-col-dense">column dense</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">subgrid</div>
-                        <div class="property-desc">Nested grids that inherit parent grid lines</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">align-items</div><div class="meta-desc">Vertical block cross-axis alignment parameters.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p4-align-start">start</div>
+                            <div class="value-chip-spec c1-p4-align-end">end</div>
+                            <div class="value-chip-spec c1-p4-align-center">center</div>
+                            <div class="value-chip-spec c1-p4-align-stretch">stretch</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">container-type / @container</div>
-                        <div class="property-desc">Container queries for component-based responsive design</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">justify-items</div><div class="meta-desc">Inline axis element distribution parameters.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p5-justify-start">start</div>
+                            <div class="value-chip-spec c1-p5-justify-end">end</div>
+                            <div class="value-chip-spec c1-p5-justify-center">center</div>
+                            <div class="value-chip-spec c1-p5-justify-stretch">stretch</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">place-items</div><div class="meta-desc">Dual axis shorthand macro.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p6-place-center">center</div>
+                            <div class="value-chip-spec c1-p6-place-start-stretch">start stretch</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">gap</div><div class="meta-desc">Gutter dimensions matrix.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p7-gap-normal">20px</div>
+                            <div class="value-chip-spec c1-p7-gap-split">40px 10px</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">grid-template-columns: subgrid</div><div class="meta-desc">Low-level track inheritance from direct parents layout.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p8-subgrid-cols">subgrid (cols)</div>
+                            <div class="value-chip-spec c1-p8-subgrid-rows">subgrid (rows)</div>
+                            <div class="value-chip-spec c1-p8-subgrid-both">subgrid (both)</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">grid-template-areas</div><div class="meta-desc">Named structural layout grids mapping tokens.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p9-area-head">"h h h" "m m s"</div>
+                            <div class="value-chip-spec c1-p9-area-null">none</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">grid-auto-rows</div><div class="meta-desc">Dynamically generated implicit track scaling.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p10-auto-rows-min">min-content</div>
+                            <div class="value-chip-spec c1-p10-auto-rows-len">150px</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">grid-auto-columns</div><div class="meta-desc">Implicit columns dimensioning rules.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p11-auto-cols-max">max-content</div>
+                            <div class="value-chip-spec c1-p11-auto-cols-fr">0.5fr</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">container-type</div><div class="meta-desc">Establishes context rules tracking local bounds changes.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p12-cq-inline">inline-size</div>
+                            <div class="value-chip-spec c1-p12-cq-size">size</div>
+                            <div class="value-chip-spec c1-p12-cq-normal">normal</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@container width rule</div><div class="meta-desc">Evaluated responsive condition styles.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p13-cq-apply">min-width: 400px context</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@container logical operators</div><div class="meta-desc">Advanced matching checks inside viewport.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p14-cq-style">inline-size > 500px</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@container style query</div><div class="meta-desc">Experimental custom property lookups validation.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c1-p15-cq-experimental">style(--theme: dark)</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Flexbox Advanced -->
-            <div class="category-card">
-                <h2 class="category-title">⚡ Flexbox Advanced</h2>
-                <div class="property-list">
-                    <div class="property-item">
-                        <div class="property-name">gap, row-gap, column-gap</div>
-                        <div class="property-desc">Control spacing between flex items (modern approach)</div>
+
+            <div class="matrix-panel category-view-node" id="cat-flexbox-eng">
+                <h2 class="category-title-header">⚡ 2. Flexbox Engineering</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">display</div><div class="meta-desc">Flex layout structure initialization model.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p1-disp-flex">flex</div>
+                            <div class="value-chip-spec c2-p1-disp-inline">inline-flex</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">flex: 1 0 auto;</div>
-                        <div class="property-desc">Shorthand for flex-grow, flex-shrink, flex-basis</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">flex-direction</div><div class="meta-desc">Main axis vector layout orientation.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p2-dir-row">row</div>
+                            <div class="value-chip-spec c2-p2-dir-rowbox">row-reverse</div>
+                            <div class="value-chip-spec c2-p2-dir-col">column</div>
+                            <div class="value-chip-spec c2-p2-dir-colbox">column-reverse</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">align-content</div>
-                        <div class="property-desc">Align flex lines when there's extra space</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">flex-wrap</div><div class="meta-desc">Multi-line break constraints interface.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p3-wrap-no">nowrap</div>
+                            <div class="value-chip-spec c2-p3-wrap-yes">wrap</div>
+                            <div class="value-chip-spec c2-p3-wrap-rev">wrap-reverse</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">order</div>
-                        <div class="property-desc">Visual reordering of flex items</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">justify-content</div><div class="meta-desc">Main axis space distribution rules.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p4-jc-start">flex-start</div>
+                            <div class="value-chip-spec c2-p4-jc-end">flex-end</div>
+                            <div class="value-chip-spec c2-p4-jc-center">center</div>
+                            <div class="value-chip-spec c2-p4-jc-between">space-between</div>
+                            <div class="value-chip-spec c2-p4-jc-around">space-around</div>
+                            <div class="value-chip-spec c2-p4-jc-evenly">space-evenly</div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Transform & 3D -->
-            <div class="category-card">
-                <h2 class="category-title">🎭 Transform & 3D</h2>
-                <div class="property-list">
-                    <div class="property-item">
-                        <div class="property-name">transform-style: preserve-3d;</div>
-                        <div class="property-desc">Enable 3D transformations on children</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">align-items</div><div class="meta-desc">Cross axis alignment structures.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p5-ai-start">flex-start</div>
+                            <div class="value-chip-spec c2-p5-ai-end">flex-end</div>
+                            <div class="value-chip-spec c2-p5-ai-center">center</div>
+                            <div class="value-chip-spec c2-p5-ai-baseline">baseline</div>
+                            <div class="value-chip-spec c2-p5-ai-stretch">stretch</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">perspective</div>
-                        <div class="property-desc">3D perspective for depth</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">align-self</div><div class="meta-desc">Individual cross axis element overrides.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p6-as-auto">auto</div>
+                            <div class="value-chip-spec c2-p6-as-center">center</div>
+                            <div class="value-chip-spec c2-p6-as-stretch">stretch</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">backface-visibility</div>
-                        <div class="property-desc">Control visibility of back face in 3D transforms</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">align-content</div><div class="meta-desc">Multi-line row spacing structures configuration.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p7-ac-start">flex-start</div>
+                            <div class="value-chip-spec c2-p7-ac-between">space-between</div>
+                            <div class="value-chip-spec c2-p7-ac-stretch">stretch</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">transform-origin</div>
-                        <div class="property-desc">Change the origin point of transformations</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">flex-grow</div><div class="meta-desc">Proportional scaling factors interface.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p8-grow-zero">0</div>
+                            <div class="value-chip-spec c2-p8-grow-one">1</div>
+                            <div class="value-chip-spec c2-p8-grow-two">2</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">scale3d(), rotate3d()</div>
-                        <div class="property-desc">3D-specific transformation functions</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">flex-shrink</div><div class="meta-desc">Compression behaviors parameters under limited bounds.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p9-shrink-zero">0</div>
+                            <div class="value-chip-spec c2-p9-shrink-one">1</div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Animation & Transition -->
-            <div class="category-card">
-                <h2 class="category-title">🎬 Animation & Transition</h2>
-                <div class="property-list">
-                    <div class="property-item">
-                        <div class="property-name">@keyframes</div>
-                        <div class="property-desc">Define animation sequences</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">flex-basis</div><div class="meta-desc">Initial structural dimensions configurations before space splits.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p10-basis-auto">auto</div>
+                            <div class="value-chip-spec c2-p10-basis-zero">0</div>
+                            <div class="value-chip-spec c2-p10-basis-px">300px</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">animation-fill-mode</div>
-                        <div class="property-desc">Control styles before/after animation</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">flex shorthand</div><div class="meta-desc">Unified parameters injection token.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p11-shorthand-initial">0 1 auto</div>
+                            <div class="value-chip-spec c2-p11-shorthand-none">none</div>
+                            <div class="value-chip-spec c2-p11-shorthand-flexy">1 1 100%</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">steps() timing function</div>
-                        <div class="property-desc">Create stepped animations</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">order</div><div class="meta-desc">Visual ordering indices reconfiguration.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p12-ord-neg">-1</div>
+                            <div class="value-chip-spec c2-p12-ord-zero">0</div>
+                            <div class="value-chip-spec c2-p12-ord-pos">999</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">will-change</div>
-                        <div class="property-desc">Hint browser about upcoming changes (use sparingly)</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">gap</div><div class="meta-desc">Unified channel spacing parameters.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p13-gap-len">15px</div>
+                            <div class="value-chip-spec c2-p13-gap-pct">5%</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">transition-timing-function: cubic-bezier()</div>
-                        <div class="property-desc">Custom timing functions for smooth animations</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">row-gap</div><div class="meta-desc">Vertical multi-line break padding.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p14-rowgap-set">25px</div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Clip, Mask & Blend -->
-            <div class="category-card">
-                <h2 class="category-title">🎨 Clip, Mask & Blend</h2>
-                <div class="property-list">
-                    <div class="property-item">
-                        <div class="property-name">clip-path</div>
-                        <div class="property-desc">Create custom clipping shapes</div>
-                    </div>
-                    <div class="property-item">
-                        <div class="property-name">mask-image / -webkit-mask-image</div>
-                        <div class="property-desc">Apply image/gradient masks</div>
-                    </div>
-                    <div class="property-item">
-                        <div class="property-name">mix-blend-mode</div>
-                        <div class="property-desc">Blend element with background (like Photoshop)</div>
-                    </div>
-                    <div class="property-item">
-                        <div class="property-name">background-blend-mode</div>
-                        <div class="property-desc">Blend multiple backgrounds together</div>
-                    </div>
-                    <div class="property-item">
-                        <div class="property-name">isolation: isolate;</div>
-                        <div class="property-desc">Create new stacking context for blend modes</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Filters & Effects -->
-            <div class="category-card">
-                <h2 class="category-title">✨ Filters & Effects</h2>
-                <div class="property-list">
-                    <div class="property-item">
-                        <div class="property-name">backdrop-filter</div>
-                        <div class="property-desc">Apply filters to area behind element (frosted glass)</div>
-                    </div>
-                    <div class="property-item">
-                        <div class="property-name">filter: drop-shadow()</div>
-                        <div class="property-desc">Better shadows that follow element shape</div>
-                    </div>
-                    <div class="property-item">
-                        <div class="property-name">-webkit-background-clip: text</div>
-                        <div class="property-desc">Clip background to text (gradient text)</div>
-                    </div>
-                    <div class="property-item">
-                        <div class="property-name">-webkit-text-fill-color: transparent</div>
-                        <div class="property-desc">Make text transparent for background clip</div>
-                    </div>
-                    <div class="property-item">
-                        <div class="property-name">shape-outside</div>
-                        <div class="property-desc">Make text wrap around custom shapes</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">column-gap</div><div class="meta-desc">Horizontal element gutters values.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c2-p15-colgap-set">12px</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- CSS Custom Properties -->
-            <div class="category-card">
-                <h2 class="category-title">🎯 CSS Custom Properties</h2>
-                <div class="property-list">
-                    <div class="property-item">
-                        <div class="property-name">--variable-name: value;</div>
-                        <div class="property-desc">Define custom properties</div>
+
+            <div class="matrix-panel category-view-node" id="cat-transform-3d">
+                <h2 class="category-title-header">🎭 3. Transform & 3D Graphics Matrix</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">transform-style</div><div class="meta-desc">Z-plane flattening toggle layer.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c3-p1-style-3d">preserve-3d</div>
+                            <div class="value-chip-spec c3-p1-style-flat">flat</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">var(--variable, fallback)</div>
-                        <div class="property-desc">Use custom properties with fallback</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">perspective</div><div class="meta-desc">Spatial focal depth viewport projection metrics.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c3-p2-pers-deep">200px</div>
+                            <div class="value-chip-spec c3-p2-pers-mid">600px</div>
+                            <div class="value-chip-spec c3-p2-pers-none">none</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">calc() with variables</div>
-                        <div class="property-desc">Dynamic calculations with custom properties</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">backface-visibility</div><div class="meta-desc">Determines if elements remain visible when flipped.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c3-p3-backface-hide">hidden</div>
+                            <div class="value-chip-spec c3-p3-backface-show">visible</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">@property</div>
-                        <div class="property-desc">Register custom properties with types and constraints</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">transform-origin</div><div class="meta-desc">Vector alteration focal axes coordinates.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c3-p4-origin-tl">top left</div>
+                            <div class="value-chip-spec c3-p4-origin-c">center</div>
+                            <div class="value-chip-spec c3-p4-origin-3d">50% 50% -100px</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">translate3d()</div><div class="meta-desc">Tri-axis translation vector function.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c3-p5-trans-3d">translate3d(20px, -10px, 50px)</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scale3d()</div><div class="meta-desc">Spatial scale vector modification.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c3-p6-scale-3d">scale3d(1.5, 1.5, 0.5)</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">rotate3d()</div><div class="meta-desc">Spatial rotational angle parameters vector.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c3-p7-rot-3d">rotate3d(1, 1, 1, 45deg)</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">matrix3d()</div><div class="meta-desc">Raw 4x4 matrix transformation layer.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c3-p8-matrix-3d">matrix3d(...) matrix configurations</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">perspective-origin</div><div class="meta-desc">Vanishing point location modifications.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c3-p9-pers-org-top">top</div>
+                            <div class="value-chip-spec c3-p9-pers-org-bl">bottom left</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scaleX</div><div class="meta-desc">Horizontal scaling modifier.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c3-p10-scale-x">scaleX(1.2)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scaleY</div><div class="meta-desc">Vertical scaling modifier.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c3-p11-scale-y">scaleY(0.8)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">rotateX</div><div class="meta-desc">X-axis spatial inclination loop.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c3-p12-rot-x">rotateX(60deg)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">rotateY</div><div class="meta-desc">Y-axis flip rotation interface.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c3-p13-rot-y">rotateY(180deg)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">skewX</div><div class="meta-desc">Horizontal shearing configuration angles.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c3-p14-skew-x">skewX(15deg)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">skewY</div><div class="meta-desc">Vertical angle skew operations.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c3-p15-skew-y">skewY(-10deg)</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Modern & Experimental -->
-            <div class="category-card">
-                <h2 class="category-title">🚀 Modern & Experimental</h2>
-                <div class="property-list">
-                    <div class="property-item">
-                        <div class="property-name">aspect-ratio</div>
-                        <div class="property-desc">Maintain element aspect ratio</div>
+
+            <div class="matrix-panel category-view-node" id="cat-anim-engine">
+                <h2 class="category-title-header">🎬 4. Animation Engine & Bezier Systems</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">animation-fill-mode</div><div class="meta-desc">Visual state resolution bounds before/after runtime loops.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c4-p1-fill-fwd">forwards</div>
+                            <div class="value-chip-spec c4-p1-fill-bwd">backwards</div>
+                            <div class="value-chip-spec c4-p1-fill-both">both</div>
+                            <div class="value-chip-spec c4-p1-fill-none">none</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">scroll-snap-type</div>
-                        <div class="property-desc">Control scroll snapping behavior</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">animation-timing-function: steps()</div><div class="meta-desc">Discontinuous quantum frame transition constraints.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c4-p2-steps-start">steps(4, start)</div>
+                            <div class="value-chip-spec c4-p2-steps-end">steps(4, end)</div>
+                            <div class="value-chip-spec c4-p2-steps-jnone">steps(2, jump-none)</div>
+                            <div class="value-chip-spec c4-p2-steps-jboth">steps(2, jump-both)</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">content-visibility</div>
-                        <div class="property-desc">Optimize rendering performance</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">will-change</div><div class="meta-desc">Hints to browser for pre-rendering onto GPU hardware layers.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c4-p3-will-gpu">transform, opacity</div>
+                            <div class="value-chip-spec c4-p3-will-scroll">scroll-position</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">@supports</div>
-                        <div class="property-desc">Feature queries for progressive enhancement</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">animation-timing-function: cubic-bezier()</div><div class="meta-desc">Velocity configuration math splines.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c4-p4-bezier-linear">cubic-bezier(0,0,1,1)</div>
+                            <div class="value-chip-spec c4-p4-bezier-smooth">cubic-bezier(0.25, 1, 0.5, 1)</div>
+                            <div class="value-chip-spec c4-p4-bezier-bounce">cubic-bezier(0.68, -0.6, 0.32, 1.6)</div>
+                        </div>
                     </div>
-                    <div class="property-item">
-                        <div class="property-name">accent-color</div>
-                        <div class="property-desc">Style form control accents</div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">animation-direction</div><div class="meta-desc">Runtime timeline traversal patterns tracking rules.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c4-p5-dir-norm">normal</div>
+                            <div class="value-chip-spec c4-p5-dir-rev">reverse</div>
+                            <div class="value-chip-spec c4-p5-dir-alt">alternate</div>
+                            <div class="value-chip-spec c4-p5-dir-altrev">alternate-reverse</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">animation-play-state</div><div class="meta-desc">Runtime execution playback toggle switch.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c4-p6-play-run">running</div>
+                            <div class="value-chip-spec c4-p6-play-pause">paused</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">animation-iteration-count</div><div class="meta-desc">Loop repetition counters limits.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c4-p7-iter-count">infinite</div>
+                            <div class="value-chip-spec c4-p7-iter-one">1</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">animation-duration</div><div class="meta-desc">Temporal runtime speed metrics.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c4-p8-dur-fast">200ms</div>
+                            <div class="value-chip-spec c4-p8-dur-slow">5s</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">animation-delay</div><div class="meta-desc">Initial calculation delay timers parameters.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c4-p9-delay-set">1s</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">animation-name</div><div class="meta-desc">Keyframes timeline structural identifiers token.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c4-p10-name-bind">pulse-glow</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">transition-property</div><div class="meta-desc">Explicit targets watching for parameter updates.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c4-p11-trans-prop-all">all</div>
+                            <div class="value-chip-spec c4-p11-trans-prop-iso">transform</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">transition-duration</div><div class="meta-desc">Interpolation timing durations.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c4-p12-trans-dur">400ms</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">transition-delay</div><div class="meta-desc">Saccade latency control offsets.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c4-p13-trans-delay">100ms</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">transition-timing-function</div><div class="meta-desc">Interpolation velocity modifiers graphs.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c4-p14-trans-tf-apple">Apple Custom Inset</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">transition shorthand</div><div class="meta-desc">Unified serialization token.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c4-p15-shorthand-matrix">Unified Shorthand Config</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="demo-section">
-            <h2 class="demo-title">Live Advanced CSS Demos</h2>
-            
-            <div class="demo-grid">
-                <div class="demo-card">
-                    <h3>CSS Grid with Grid Areas</h3>
-                    <div class="demo-element grid-container">
-                        <div class="grid-item">Header</div>
-                        <div class="grid-item">Sidebar</div>
-                        <div class="grid-item">Main</div>
-                        <div class="grid-item">Footer</div>
+
+            <div class="matrix-panel category-view-node" id="cat-clip-mask">
+                <h2 class="category-title-header">🎨 5. Clip Path & Masking Systems</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">clip-path</div><div class="meta-desc">Geometric vector boundary rendering masks.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c5-p1-clip-poly">polygon(...)</div>
+                            <div class="value-chip-spec c5-p1-clip-circ">circle(...)</div>
+                            <div class="value-chip-spec c5-p1-clip-inset">inset(...)</div>
+                        </div>
                     </div>
-                    <div class="code-block">
-<span class="css-selector">.container</span> {<br>
-&nbsp;&nbsp;<span class="css-property">display</span>: <span class="css-value">grid</span>;<br>
-&nbsp;&nbsp;<span class="css-property">grid-template-areas</span>: <span class="css-value">"header header" "sidebar main" "footer footer"</span>;<br>
-&nbsp;&nbsp;<span class="css-property">grid-template-columns</span>: <span class="css-value">1fr 3fr</span>;<br>
-}
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mix-blend-mode</div><div class="meta-desc">Inter-element pixel blend operations formulas.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c5-p2-mix-mult">multiply</div>
+                            <div class="value-chip-spec c5-p2-mix-scr">screen</div>
+                            <div class="value-chip-spec c5-p2-mix-ovr">overlay</div>
+                            <div class="value-chip-spec c5-p2-mix-diff">difference</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">background-blend-mode</div><div class="meta-desc">Intra-element layer blending algorithms parameters.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c5-p3-bgblend-lum">luminosity</div>
+                            <div class="value-chip-spec c5-p3-bgblend-soft">soft-light</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">isolation</div><div class="meta-desc">Establishes isolated z-index stacking layers for background blending.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c5-p4-isolate-on">isolate</div>
+                            <div class="value-chip-spec c5-p4-isolate-auto">auto</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mask-image</div><div class="meta-desc">Alpha transparent pixel mapping masks.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c5-p5-mask-grad">linear-gradient vector mask</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mask-mode</div><div class="meta-desc">Luminance vs alpha vector reading modes.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c5-p6-mask-mode-alpha">alpha</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mask-repeat</div><div class="meta-desc">Tiling pattern repetition rules configurations.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c5-p7-mask-repeat-no">no-repeat</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mask-position</div><div class="meta-desc">Mask offset alignment coordinates.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c5-p8-mask-pos-center">center</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mask-size</div><div class="meta-desc">Dimension bounds matching specifications.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c5-p9-mask-size-cover">cover</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mask-clip</div><div class="meta-desc">Clipping bounds intersection targets.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c5-p10-mask-clip-border">border-box</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mask-origin</div><div class="meta-desc">Coordinate reference boundary anchors.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c5-p11-mask-org-content">content-box</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mask-composite</div><div class="meta-desc">Pixel addition/subtraction boolean vectors.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c5-p12-mask-comp-add">add</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">clip-rule</div><div class="meta-desc">Polygon tracking orientation vectors rule.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c5-p13-clip-rule-evenodd">evenodd</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">box-decoration-break</div><div class="meta-desc">Fragment rendering configuration across inline wraps.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c5-p14-box-decor-slice">slice</div>
+                            <div class="value-chip-spec c5-p15-box-decor-clone">clone</div>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="matrix-panel category-view-node" id="cat-complex-filter">
+                <h2 class="category-title-header">✨ 6. Complex Filter Architecture</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">backdrop-filter</div><div class="meta-desc">Post-processing pixel shifts behind an element.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c6-p1-bf-blur">blur(15px)</div>
+                            <div class="value-chip-spec c6-p1-bf-sat">saturate(200%)</div>
+                            <div class="value-chip-spec c6-p1-bf-mixed">blur(10px) brightness(80%)</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">filter: drop-shadow()</div><div class="meta-desc">Alpha channel precise multi-layered drop shadows.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c6-p2-ds-clean">drop-shadow(clean)</div>
+                            <div class="value-chip-spec c6-p2-ds-multi">drop-shadow(multi-stacked)</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">background-clip: text</div><div class="meta-desc">Restricts background rendering to text shapes.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p3-clip-text">text tracking mode</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">-webkit-text-fill-color</div><div class="meta-desc">Decoupled alpha font filling parameters.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p4-fill-trans">transparent fill</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">shape-outside</div><div class="meta-desc">Text wrapping boundaries configuration around floats.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p5-shape-outside-circ">circle(50%)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">shape-margin</div><div class="meta-desc">Text wrapping padding offsets.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p6-shape-margin">20px</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">shape-image-threshold</div><div class="meta-desc">Alpha channel cutoff limits parsing rules.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p7-shape-image-threshold">0.5</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">filter: blur()</div><div class="meta-desc">Gaussian pixel blur modifier.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p8-filt-blur">blur(5px)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">filter: brightness()</div><div class="meta-desc">Luminance multiplier adjustments.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p9-filt-brightness">brightness(1.5)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">filter: contrast()</div><div class="meta-desc">Tone channel scale modifications.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p10-filt-contrast">contrast(200%)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">filter: grayscale()</div><div class="meta-desc">Desaturation conversion matrix.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p11-filt-grayscale">grayscale(100%)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">filter: hue-rotate()</div><div class="meta-desc">Color wheel rotational degree displacement.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p12-filt-hue">hue-rotate(90deg)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">filter: invert()</div><div class="meta-desc">Color channel matrix reversal.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p13-filt-invert">invert(1)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">filter: opacity()</div><div class="meta-desc">Alpha transparency rendering modifier.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p14-filt-opacity">opacity(0.5)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">filter: sepia()</div><div class="meta-desc">Sepia tone matrix conversion filters.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c6-p15-filt-sepia">sepia(0.8)</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-panel category-view-node" id="cat-custom-props">
+                <h2 class="category-title-header">🎯 7. Custom Properties Engine</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">var() pointer lookup</div><div class="meta-desc">Basic token dynamic referencing.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p1-var-basic">var(--text-primary)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">var() recursive chaining</div><div class="meta-desc">Failover lookup paths configuration fallback.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p2-var-fallback">var(--token, var(--fallback))</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">nested fallback parameters</div><div class="meta-desc">Inherited context safety checks.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p3-var-nested">Nested Fallback Engine</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">calc() math additions</div><div class="meta-desc">Dynamic dimension tracking formulas.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p4-calc-add">calc(100% - 40px)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">calc() angular multiplication</div><div class="meta-desc">Complex rotational degree computations.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p5-calc-mult">calc(var(--angle) * 2)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">calc() mixed tracking</div><div class="meta-desc">Multi-unit computational vectors string.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p6-calc-mixed">calc(5vh + 10px - 2rem)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@property syntax validation</div><div class="meta-desc">Defines explicit type validation rules for variables.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p7-property-syntax">syntax: '&lt;angle&gt;' validation</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@property inheritance matrix</div><div class="meta-desc">Inheritance constraints configuration toggles.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p8-property-inherit">inherits: true/false matrix</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">min() comparison</div><div class="meta-desc">Upper bound ceiling checks parsing function.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p9-min-math">min(400px, 100%)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">max() comparison</div><div class="meta-desc">Lower bound floor constraints calculations.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p10-max-math">max(200px, 50%)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">clamp() boundaries</div><div class="meta-desc">Tri-parameter fluid value bounds scaling layout.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p11-clamp-math">clamp(200px, 30vw, 800px)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">env() safe area top</div><div class="meta-desc">Physical hardware notch padding offsets.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p12-env-safe-top">env(safe-area-inset-top)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">env() safe area bottom</div><div class="meta-desc">Hardware navigation gesture bar protection padding.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p13-env-safe-bottom">env(safe-area-inset-bottom)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">env() safe area left</div><div class="meta-desc">Device landscape safety padding boundaries.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p14-env-safe-left">env(safe-area-inset-left)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">env() safe area right</div><div class="meta-desc">Device right bezel bounding protection offsets.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c7-p15-env-safe-right">env(safe-area-inset-right)</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-panel category-view-node" id="cat-modern-presets">
+                <h2 class="category-title-header">🚀 8. Modern Presets & Scroll Snapping</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">aspect-ratio</div><div class="meta-desc">Enforces proportional box dimensions constraints.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c8-p1-aspect-sq">1 / 1</div>
+                            <div class="value-chip-spec c8-p1-aspect-vid">16 / 9</div>
+                            <div class="value-chip-spec c8-p1-aspect-gold">1.618 / 1</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-snap-type</div><div class="meta-desc">Establishes strict positional locking constraints for scrolling.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c8-p2-snap-xm">x mandatory</div>
+                            <div class="value-chip-spec c8-p2-snap-yp">y proximity</div>
+                            <div class="value-chip-spec c8-p2-snap-both">both always</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-snap-align</div><div class="meta-desc">Element capturing focal points within the viewport.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c8-p3-align-start">start</div>
+                            <div class="value-chip-spec c8-p3-align-center">center</div>
+                            <div class="value-chip-spec c8-p3-align-end">end</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-snap-stop</div><div class="meta-desc">Inertial slide bypass protection configuration filters.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c8-p4-snap-stop-always">always</div>
+                            <div class="value-chip-spec c8-p4-snap-stop-normal">normal</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@supports feature queries</div><div class="meta-desc">Logical inspection flags evaluating engine engine checks.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c8-p5-supports-subgrid">@supports combo checks</div>
+                            <div class="value-chip-spec c8-p6-supports-not">@supports not logic</div>
+                            <div class="value-chip-spec c8-p7-supports-or">@supports or conditions</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">accent-color</div><div class="meta-desc">Unified custom palette rendering for native input controls.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c8-p8-accent-green">neon green fill</div>
+                            <div class="value-chip-spec c8-p9-accent-cyan">neon cyan toggle</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scrollbar-gutter</div><div class="meta-desc">Reserves viewport layout space to prevent horizontal jumping.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c8-p10-scrollbar-stable">stable</div>
+                            <div class="value-chip-spec c8-p11-scrollbar-both">stable both-edges</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scrollbar-width</div><div class="meta-desc">Native sizing layout adjustments parameters.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c8-p12-scrollbar-width-thin">thin</div>
+                            <div class="value-chip-spec c8-p13-scrollbar-width-none">none</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scrollbar-color</div><div class="meta-desc">Native rail tint parameters overrides.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c8-p14-scrollbar-color-set">tint maps</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-behavior</div><div class="meta-desc">Viewport transition interpolation behaviors mapping.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c8-p15-scroll-behavior-smooth">smooth</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-panel category-view-node" id="cat-render-pipeline">
+                <h2 class="category-title-header">⚙️ 9. Render Pipeline Optimization</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">content-visibility</div><div class="meta-desc">Completely skips calculation parsing loops for offscreen subtrees.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c9-p1-cv-auto">auto</div>
+                            <div class="value-chip-spec c9-p1-cv-hidden">hidden</div>
+                            <div class="value-chip-spec c9-p1-cv-visible">visible</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">contain-intrinsic-size</div><div class="meta-desc">Reserves structural spacer heights for unrendered layout trees.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c9-p2-cis-len">0 400px</div>
+                            <div class="value-chip-spec c9-p2-cis-auto">auto 200px</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">contain isolation flags</div><div class="meta-desc">Locks browser reflow operations strictly inside local blocks.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c9-p3-contain-strict">strict</div>
+                            <div class="value-chip-spec c9-p3-contain-content">content</div>
+                            <div class="value-chip-spec c9-p3-contain-paint">paint</div>
+                            <div class="value-chip-spec c9-p3-contain-layout">layout</div>
+                            <div class="value-chip-spec c9-p3-contain-size">size</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">image-rendering</div><div class="meta-desc">Bitmap scaling filtering scaling logic.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c9-p4-image-rendering-pixel">pixelated</div>
+                            <div class="value-chip-spec c9-p4-image-rendering-crisp">crisp-edges</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">translateZ(0) hardware prompt</div><div class="meta-desc">Forces allocation of a dedicated rendering layer.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c9-p5-back-filter-gpu">GPU Layer Hack</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">text-rendering speed parameters</div><div class="meta-desc">Balances layout performance against typographic crispness.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c9-p6-text-rendering-speed">optimizeSpeed</div>
+                            <div class="value-chip-spec c9-p7-text-rendering-legibility">optimizeLegibility</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">contain-intrinsic-width</div><div class="meta-desc">Independent horizontal sizing reservations.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c9-p8-contain-intrinsic-width">300px</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">contain-intrinsic-height</div><div class="meta-desc">Independent vertical sizing bounds.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c9-p9-contain-intrinsic-height">500px</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">contain-intrinsic-inline-size</div><div class="meta-desc">Logical axes intrinsic definitions configuration.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c9-p10-contain-intrinsic-inline">auto 100px</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">contain-intrinsic-block-size</div><div class="meta-desc">Logical vertical stacking sizing parameters.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c9-p11-contain-intrinsic-block">auto 150px</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">will-change: opacity</div><div class="meta-desc">Pre-registers opacity changes in the composition pipe.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c9-p12-will-change-opacity">opacity tracking</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">will-change: contents</div><div class="meta-desc">Tells browser that element contents change frequently.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c9-p13-will-change-contents">contents update flag</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">paint-order</div><div class="meta-desc">Vector stroke/fill layer sequencing arrangement mapping.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c9-p14-paint-order-normal">normal</div>
+                            <div class="value-chip-spec c9-p15-paint-order-markers">stroke fill markers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-panel category-view-node" id="cat-fluid-typo">
+                <h2 class="category-title-header">👑 10. Fluid Typography & Font Engineering</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">clamp() dynamic font scale</div><div class="meta-desc">Dynamic linear scale computations linking viewports bounds.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p1-clamp-font">clamp(1.5rem, 4vw, 4rem)</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">font-palette</div><div class="meta-desc">Color indices selector for multi-color vector fonts.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p2-font-palette-dark">--dark-matrix selection</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">text-underline-offset</div><div class="meta-desc">Fine editorial decoration vertical displacement values.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p3-underline-offset-px">8px spacing offset</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">text-decoration-skip-ink</div><div class="meta-desc">Controls decoration clipping across glyph descenders.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c10-p4-skip-ink-auto">auto</div>
+                            <div class="value-chip-spec c10-p4-skip-ink-none">none</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">font-synthesis</div><div class="meta-desc">Browser faux rendering engine blocks validation rules.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c10-p5-font-synthesis-none">none</div>
+                            <div class="value-chip-spec c10-p6-font-synthesis-weight">weight</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">font-kerning</div><div class="meta-desc">Glyph character spacing metrics tuning.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p7-font-kerning-normal">normal micro tracks</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">font-variant-caps</div><div class="meta-desc">Small-caps conversion matrix selection filters.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p8-font-variant-caps-small">small-caps token</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">font-optical-sizing</div><div class="meta-desc">Dynamic font contour optimizations mapping viewport reads.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p9-font-optical-sizing-auto">auto scaling</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">text-justify</div><div class="meta-desc">Paragraph alignment spacing algorithms rules.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p10-text-justify-interword">inter-word engine</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">text-orientation</div><div class="meta-desc">Character rotation rules inside vertical typography lines.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p11-text-orientation-mixed">mixed profile</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">text-overflow</div><div class="meta-desc">String clipping rules at block container bounds.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p12-text-overflow-ellipsis">ellipsis wrap</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">line-break</div><div class="meta-desc">Strictness limits for line wrapping configurations.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p13-line-break-strict">strict parameters</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">word-break</div><div class="meta-desc">Character breaking allocation rules inside blocks.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p14-word-break-all">break-all configuration</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">hyphens</div><div class="meta-desc">Algorithmic hyphen insertion rules tracker flags.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c10-p15-hyphens-auto">auto hyphens dictionary</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-panel category-view-node" id="cat-anchor-pos">
+                <h2 class="category-title-header">🗺️ 11. Architectural Anchor Positioning</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">anchor-name</div><div class="meta-desc">Registers an element as a positioning anchor hook for other items.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p1-anchor-src">--popover-anchor registered source</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">inset-area</div><div class="meta-desc">Grid template tracking positions mapping anchor bounds.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c11-p2-inset-area-top">top</div>
+                            <div class="value-chip-spec c11-p2-inset-area-bottom">bottom</div>
+                            <div class="value-chip-spec c11-p2-inset-area-right">right</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">position-try-options</div><div class="meta-desc">Failover layout rules tracking overflow limits.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c11-p3-try-flip-block">flip-block</div>
+                            <div class="value-chip-spec c11-p3-try-flip-inline">flip-inline</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">anchor(center) calculation</div><div class="meta-desc">Direct relative geometric center anchor locks.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p4-anchor-center">center linkage function</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">anchor(top) calculation</div><div class="meta-desc">Direct alignment coordinates linkage loops.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p5-anchor-top">top edge anchor lock</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">anchor(bottom) calculation</div><div class="meta-desc">Lower edge boundary binding checks.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p6-anchor-bottom">bottom linkage axis</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">anchor(left) calculation</div><div class="meta-desc">Left vertical margin relative anchor point.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p7-anchor-left">left edge alignment</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">anchor(right) calculation</div><div class="meta-desc">Right boundary track intersection parameters.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p8-anchor-right">right tracker limit</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">anchor-size(width)</div><div class="meta-desc">Direct dynamic dimension replication mappings.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p9-anchor-size-width">replicate width checks</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">anchor-size(height)</div><div class="meta-desc">Vertical scale inheritance matching metrics.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p10-anchor-size-height">replicate target height</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">position-visibility</div><div class="meta-desc">Hiding logic conditions when targets exit visibility fields.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p11-position-visibility-always">always</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">anchors-visible match lookup</div><div class="meta-desc">Destroys floating layers when root target goes out of view.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p12-position-visibility-anchored">anchors-visible lock</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">position-try-order</div><div class="meta-desc">Preference parameters sequencing for failover rules.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p13-position-try-order-normal">normal sequential</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">most-space choice parameter</div><div class="meta-desc">Selects layout area with maximal real estate space.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p14-position-try-order-most-space">most-space algorithmic selection</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">anchor-size(max-width)</div><div class="meta-desc">Boundary calculations limiting floating dimensions growth.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c11-p15-anchor-size-max">max width constraints check</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-panel category-view-node" id="cat-scroll-timeline">
+                <h2 class="category-title-header">🖱️ 12. Scroll Interactions & Timelines</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-timeline</div><div class="meta-desc">Binds animation progress timelines directly to container scroll offsets.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c12-p1-scroll-timeline-y">y tracking mode</div>
+                            <div class="value-chip-spec c12-p1-scroll-timeline-x">x tracking timeline</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">view-timeline</div><div class="meta-desc">Tracks element intersections within scrolling bounds viewports.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p2-view-timeline-block">block layout axis</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">overscroll-behavior</div><div class="meta-desc">Disables nested scrolling chaining into parent trees.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c12-p3-overscroll-contain">contain</div>
+                            <div class="value-chip-spec c12-p3-overscroll-none">none</div>
+                            <div class="value-chip-spec c12-p3-overscroll-auto">auto</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-margin-top</div><div class="meta-desc">Prevents heading content overlapping beneath sticky navigation bars.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p4-scroll-margin-top">100px calculation spacing</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-padding-inline</div><div class="meta-desc">Horizontal viewport boundaries structural alignment gaps.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p5-scroll-padding-inline">40px track padding</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">overscroll-behavior-x</div><div class="meta-desc">Horizontal chain locks isolation configuration flags.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p6-overscroll-behavior-x-none">none lock</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">overscroll-behavior-y</div><div class="meta-desc">Vertical scroll bounds isolation constraints checks.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p7-overscroll-behavior-y-contain">contain vertical loops</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-margin-bottom</div><div class="meta-desc">Lower padding boundary margin parameters.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p8-scroll-margin-bottom">50px space tracking</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-margin-left</div><div class="meta-desc">Left bounds spacing anchor values.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p9-scroll-margin-left">20px margin edge</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-margin-right</div><div class="meta-desc">Right boundary edge offset parameters.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p10-scroll-margin-right">20px check link</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-padding-top</div><div class="meta-desc">Top boundary padding guard logic.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p11-scroll-padding-top">30px padding mask</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-padding-bottom</div><div class="meta-desc">Lower baseline snapping clearance offsets.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p12-scroll-padding-bottom">30px track box</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-padding-left</div><div class="meta-desc">Inline left inner padding values.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p13-scroll-padding-left">10px clearance link</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-padding-right</div><div class="meta-desc">Inline right tracking clearing bounds.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p14-scroll-padding-right">10px clearance loop</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">scroll-timeline-axis</div><div class="meta-desc">Logical inline alignment progression tracking.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c12-p15-scroll-timeline-axis-inline">inline coordinate path</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-panel category-view-node" id="cat-advanced-gamut">
+                <h2 class="category-title-header">🌑 13. Advanced Gamuts & Houdini Worklets</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">color(display-p3) spectrum</div><div class="meta-desc">Accesses high-saturation colors beyond standard sRGB spaces.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c13-p1-color-p3-green">display-p3 rich neon green</div>
+                            <div class="value-chip-spec c13-p1-color-p3-crimson">display-p3 crimson active</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mask-composite vectors</div><div class="meta-desc">Logical Boolean pixel mapping transformations operations.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c13-p2-mask-comp-intersect">intersect shape</div>
+                            <div class="value-chip-spec c13-p2-mask-comp-exclude">exclude bounds</div>
+                        </div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">paint() Houdini worklet hooks</div><div class="meta-desc">Low-level custom rendering worklets passing properties.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c13-p3-paint-ripple">paint(ripple-worklet) interface</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">color(rec2020) space gamut</div><div class="meta-desc">Next-gen wide spectrum mapping rules coordinates.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c13-p4-color-rec2020">rec2020 coordination spec</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">color(srgb-linear) channel</div><div class="meta-desc">Linear tone spectrum matrix mapping checks.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c13-p5-color-srgb-linear">srgb-linear channel tracking</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">color(xyz) coordinate system</div><div class="meta-desc">Absolute colorimetric baseline configurations space vectors.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c13-p6-color-xyz">xyz coordinates map</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mask-composite subtract parameter</div><div class="meta-desc">Vector parsing subtraction algorithms rules.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c13-p7-mask-composite-subtract">subtract intersection mode</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">mask-composite add logic</div><div class="meta-desc">Unified pixel stacking execution logic masks.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c13-p8-mask-composite-add">add logical tracking</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">paint(grid-pattern) arg pipeline</div><div class="meta-desc">Injects rendering parameters directly into Houdini paint scripts.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c13-p9-paint-grid-custom">grid-pattern token pipeline</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">paint(fluid-circle) canvas bind</div><div class="meta-desc">Direct procedural background asset creation layers.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c13-p10-paint-circle-custom">fluid-circle procedural worklet</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">color-mix(in HSL)</div><div class="meta-desc">Dynamic runtime color mixing in specialized color spaces.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c13-p11-color-mix-hsl">mix ratios via HSL</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">color-mix(in OKLAB)</div><div class="meta-desc">Perceptually linear interpolation profiles configuration formulas.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c13-p12-color-mix-oklab">linear mixing inside oklab</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">color-mix(in sRGB)</div><div class="meta-desc">Standard color mixing tracking models.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c13-p13-color-mix-srgb">alpha blending over srgb</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">forced-color-adjust</div><div class="meta-desc">Overrides target controls under high-contrast accessibility themes.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c13-forced-color-adjust-none">none</div>
+                            <div class="value-chip-spec c13-forced-color-adjust-auto">auto</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-panel category-view-node" id="cat-device-caps">
+                <h2 class="category-title-header">📱 14. Device Interface Capabilities</h2>
+                <div class="property-engine-table">
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (dynamic-range)</div><div class="meta-desc">Queries high-brightness monitor display profiles capabilities.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p1-hdr-panel">high/standard HDR checks</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (prefers-reduced-motion)</div><div class="meta-desc">System accessibility animation safety overrides filters.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p2-motion-safe">reduce / no-preference motion layers</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (hover)</div><div class="meta-desc">Differentiates pointer precision mouse devices from touchscreens.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p3-hover-hardware">hover capability evaluation</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (pointer)</div><div class="meta-desc">Physical pointer target density metrics lookups.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p4-pointer-ui">coarse vs fine input flags</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (prefers-color-scheme)</div><div class="meta-desc">OS level illumination profiles tracking lookups.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p5-scheme-node">dark / light tokens check</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (prefers-contrast)</div><div class="meta-desc">Theme contrast density requirements tracking.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p6-contrast-node">more vs less contrast links</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (display-mode)</div><div class="meta-desc">Standalone PWA app framework container vs browser tracking rules.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p7-display-mode">standalone / browser display states</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (color-gamut)</div><div class="meta-desc">Hardware gamut limits lookup models.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p8-gamut-node">p3 / rec2020 hardware index</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (inverted-colors)</div><div class="meta-desc">OS level pixel inversion matrix monitors flags.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p9-inverted-node">inverted active loop</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (any-hover)</div><div class="meta-desc">Global secondary display pointer validation checks.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p10-anyhover-node">any-hover query tracking</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (any-pointer)</div><div class="meta-desc">Alternative pointer resolution metric systems.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p11-anypointer-node">any-pointer multi links</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (scripting)</div><div class="meta-desc">Validates runtime JS environment capabilities before style rendering.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p12-script-node">enabled vs disabled parsing environments</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (grid)</div><div class="meta-desc">Detects fixed-grid character hardware bitmap screens.</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p13-media-grid-node">terminal raster displays validation</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (update)</div><div class="meta-desc">Refresh frequency bounds matching models (e-ink panels validation).</div></div>
+                        <div class="value-chips-container"><div class="value-chip-spec c14-p14-update-node">fast vs slow refresh indices</div></div>
+                    </div>
+                    <div class="property-row-node">
+                        <div class="property-meta-info"><div class="meta-name">@media (orientation)</div><div class="meta-desc">Physical aspect ratio orientation mapping parameters.</div></div>
+                        <div class="value-chips-container">
+                            <div class="value-chip-spec c14-p15-orient-node">landscape vs portrait states</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="matrix-panel category-view-node" id="cat-elite-components">
+                <h2 class="category-title-header">💎 15. High-Fidelity Component Engine Showcase</h2>
                 
-                <div class="demo-card">
-                    <h3>Clip-Path Polygon</h3>
-                    <div class="demo-element clip-path-demo">
-                        Hexagon Shape
-                    </div>
-                    <div class="code-block">
-<span class="css-selector">.element</span> {<br>
-&nbsp;&nbsp;<span class="css-property">clip-path</span>: <span class="css-value">polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)</span>;<br>
-}
-                    </div>
+                <div class="value-chips-container" style="margin-bottom: 40px;">
+                    <div class="value-chip-spec c15-p1-btn-glass">Glass Translucency Structural Spec</div>
+                    <div class="value-chip-spec c15-p2-btn-shimmer">Moving Alpha Shimmer Parameter</div>
+                    <div class="value-chip-spec c15-p3-btn-neon">Neon Glow Contrast Value</div>
+                    <div class="value-chip-spec c15-p4-card-bento">Bento Structure Node</div>
+                    <div class="value-chip-spec c15-p5-text-gradient">Gradient Text Vector Vector</div>
+                    <div class="value-chip-spec c15-p6-panel-blur">Saturate Blur Panel Token</div>
+                    <div class="value-chip-spec c15-p7-glow-active">Cyan Glow Focal Active</div>
+                    <div class="value-chip-spec c15-p8-border-gradient">Dual Box Border Matrix</div>
+                    <div class="value-chip-spec c15-p9-mask-reveal">Radial Slicing Alpha Vector</div>
+                    <div class="value-chip-spec c15-p10-3d-lift">3D Matrix Axis Lift Shifter</div>
+                    <div class="value-chip-spec c15-p11-shadow-ambient">Ambient Inset Shadow Rule</div>
+                    <div class="value-chip-spec c15-p12-scroller-hidden">Hidden Rail Overflow Scroller</div>
+                    <div class="value-chip-spec c15-p13-aspect-hero">Cinematic Box Aspect Limit</div>
+                    <div class="value-chip-spec c15-p14-isolation-layer">Strict Isolation Stacking Index</div>
+                    <div class="value-chip-spec c15-p15-willchange-render">Willchange Transform Layer Prompt</div>
                 </div>
-                
-                <div class="demo-card">
-                    <h3>Blend Mode Effect</h3>
-                    <div class="demo-element blend-mode-demo">
-                        Multiply Blend
+
+                <h3 style="color:#fff; font-size:1.8rem; margin-bottom:20px;">Active Value Visual Implementations Workspace</h3>
+                <div class="visual-sandbox-grid">
+                    <div class="sandbox-card">
+                        <h4>1. Premium Glass Engine Runtime</h4>
+                        <div class="element-frame c15-p6-panel-blur" style="border: 1px solid rgba(255,255,255,0.15);">
+                            <button class="c15-p1-btn-glass" style="padding: 14px 28px; border-radius:10px; font-weight:600;">Glass State Element</button>
+                        </div>
                     </div>
-                    <div class="code-block">
-<span class="css-selector">.element::before</span> {<br>
-&nbsp;&nbsp;<span class="css-property">mix-blend-mode</span>: <span class="css-value">multiply</span>;<br>
-&nbsp;&nbsp;<span class="css-property">isolation</span>: <span class="css-value">isolate</span>;<br>
-}
+                    <div class="sandbox-card">
+                        <h4>2. Linear Shimmer Background Matrix</h4>
+                        <div class="element-frame">
+                            <button class="c15-p2-btn-shimmer" style="padding: 16px 32px; color:#fff; font-weight:700; border-radius:30px; cursor:pointer;">Shimmer Active</button>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="demo-card">
-                    <h3>CSS Mask with Gradient</h3>
-                    <div class="demo-element mask-demo">
-                        Radial Mask
+                    <div class="sandbox-card">
+                        <h4>3. 3D Spatial Vector Matrix Lift</h4>
+                        <div class="element-frame" style="perspective: 800px;">
+                            <div class="c15-p10-3d-lift c15-p11-shadow-ambient" style="background: linear-gradient(135deg, #4facfe, #00f2fe); width:160px; height:160px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#000; cursor:pointer;">
+                                Hover over me
+                            </div>
+                        </div>
                     </div>
-                    <div class="code-block">
-<span class="css-selector">.element</span> {<br>
-&nbsp;&nbsp;<span class="css-property">-webkit-mask</span>: <span class="css-value">radial-gradient(circle at center, transparent 30%, black 70%)</span>;<br>
-&nbsp;&nbsp;<span class="css-property">mask</span>: <span class="css-value">radial-gradient(circle at center, transparent 30%, black 70%)</span>;<br>
-}
+                    <div class="sandbox-card">
+                        <h4>4. Display-P3 Ultra Wide Laser Spectrum</h4>
+                        <div class="element-frame">
+                            <div class="c13-p1-color-p3-green" style="width:85%; height:80%; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#000;">
+                                pure display-p3 green layer
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="demo-card">
-                    <h3>Advanced Filters</h3>
-                    <div class="demo-element filter-demo">
-                        Drop Shadow + Hue
+                    <div class="sandbox-card">
+                        <h4>5. Geometric Vector Clipping Paths</h4>
+                        <div class="element-frame">
+                            <div class="c5-p1-clip-poly" style="background: linear-gradient(45deg, #f107a3, #7b2ff7); width:180px; height:180px;"></div>
+                        </div>
                     </div>
-                    <div class="code-block">
-<span class="css-selector">.element</span> {<br>
-&nbsp;&nbsp;<span class="css-property">filter</span>: <span class="css-value">drop-shadow(10px 10px 20px rgba(0,0,0,0.5)) hue-rotate(45deg)</span>;<br>
-}
-                    </div>
-                </div>
-                
-                <div class="demo-card">
-                    <h3>3D Transform</h3>
-                    <div class="demo-element transform-3d-demo">
-                        3D Perspective
-                    </div>
-                    <div class="code-block">
-<span class="css-selector">.element</span> {<br>
-&nbsp;&nbsp;<span class="css-property">transform</span>: <span class="css-value">perspective(500px) rotateX(15deg) rotateY(15deg)</span>;<br>
-&nbsp;&nbsp;<span class="css-property">transform-style</span>: <span class="css-value">preserve-3d</span>;<br>
-}
-                    </div>
-                </div>
-                
-                <div class="demo-card">
-                    <h3>Container Query</h3>
-                    <div class="demo-element container-query-demo">
-                        Resize Container
-                    </div>
-                    <div class="code-block">
-<span class="css-selector">.element</span> {<br>
-&nbsp;&nbsp;<span class="css-property">container-type</span>: <span class="css-value">inline-size</span>;<br>
-}<br><br>
-<span class="css-selector">@container (min-width: 300px)</span> {<br>
-&nbsp;&nbsp;<span class="css-selector">.element</span> {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="css-property">background</span>: <span class="css-value">linear-gradient(45deg, #ff6b9d, #ffd166)</span>;<br>
-&nbsp;&nbsp;}<br>
-}
-                    </div>
-                </div>
-                
-                <div class="demo-card">
-                    <h3>Scroll Snap</h3>
-                    <div class="scroll-snap-demo">
-                        <div class="scroll-item">Item 1</div>
-                        <div class="scroll-item">Item 2</div>
-                        <div class="scroll-item">Item 3</div>
-                        <div class="scroll-item">Item 4</div>
-                        <div class="scroll-item">Item 5</div>
-                    </div>
-                    <div class="code-block">
-<span class="css-selector">.container</span> {<br>
-&nbsp;&nbsp;<span class="css-property">scroll-snap-type</span>: <span class="css-value">x mandatory</span>;<br>
-}<br><br>
-<span class="css-selector">.item</span> {<br>
-&nbsp;&nbsp;<span class="css-property">scroll-snap-align</span>: <span class="css-value">start</span>;<br>
-}
+                    <div class="sandbox-card">
+                        <h4>6. Responsive Fluid Mathematical Typography</h4>
+                        <div class="element-frame">
+                            <div class="c10-p1-clamp-font c15-p5-text-gradient" style="font-weight:900; text-align:center;">
+                                FLUID TEXT
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <footer>
-            <h2>Key Takeaways for Expert CSS Developers</h2>
-            <div style="max-width: 800px; margin: 20px auto;">
-                <p style="margin-bottom: 15px;">Mastering these properties separates intermediate from expert CSS developers:</p>
-                
-                <ul style="text-align: left; display: inline-block; margin: 20px 0;">
-                    <li style="margin-bottom: 10px;"><span class="highlight">Performance</span>: Understand which properties trigger layout/paint/composite</li>
-                    <li style="margin-bottom: 10px;"><span class="highlight">Accessibility</span>: Ensure animations respect reduced motion preferences</li>
-                    <li style="margin-bottom: 10px;"><span class="highlight">Progressive Enhancement</span>: Use @supports for graceful degradation</li>
-                    <li style="margin-bottom: 10px;"><span class="highlight">Modern Layouts</span>: Combine Grid, Flexbox, and Container Queries</li>
-                    <li style="margin-bottom: 10px;"><span class="highlight">Creative Effects</span>: Use blend modes, filters, and masks responsibly</li>
-                </ul>
-                
-                <p style="margin-top: 30px; font-size: 1.2rem;">
-                    Expert CSS isn't just about knowing properties—it's about knowing 
-                    <span class="highlight">when</span> and <span class="highlight">how</span> to use them effectively!
-                </p>
-            </div>
-        </footer>
+        </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainHubView = document.getElementById('mainHubView');
+            const workspaceView = document.getElementById('workspaceView');
+            const btnBack = document.getElementById('btnBack');
+            const hubCards = document.querySelectorAll('.hub-card');
+            const categoryPanels = document.querySelectorAll('.matrix-panel');
+
+            // Routing engine setup
+            hubCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const targetCategory = card.getAttribute('data-cat');
+                    
+                    mainHubView.classList.remove('active-view');
+                    workspaceView.classList.add('active-view');
+
+                    categoryPanels.forEach(panel => {
+                        if (panel.id === `cat-${targetCategory}`) {
+                            panel.style.display = 'block';
+                        } else {
+                            panel.style.display = 'none';
+                        }
+                    });
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            btnBack.addEventListener('click', () => {
+                workspaceView.classList.remove('active-view');
+                mainHubView.classList.add('active-view');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // MDN linkage parsing controller
+            const valueChips = document.querySelectorAll('.value-chip-spec');
+            valueChips.forEach(chip => {
+                chip.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Extracting property parent element text structure
+                    const rowNode = chip.closest('.property-row-node');
+                    let queryToken = '';
+                    if (rowNode) {
+                        queryToken = rowNode.querySelector('.meta-name').textContent.trim();
+                    } else {
+                        queryToken = chip.textContent.split(' ')[0].trim();
+                    }
+                    
+                    const cleanRoute = queryToken.split(' ')[0].replace(/[:;()@]/g, '').trim();
+                    window.open(`https://developer.mozilla.org/en-US/docs/Web/CSS/${cleanRoute}`, '_blank');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
