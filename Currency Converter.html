@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Currency Converter</title>
+    <style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #0f172a; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { background: #1e293b; padding: 2rem; border-radius: 20px; width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .search-box { position: relative; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #0f172a; color: white; outline: none; }
+        .list { position: absolute; width: 100%; max-height: 200px; overflow-y: auto; background: #334155; display: none; z-index: 10; border-radius: 8px; margin-top: 5px; }
+        .list div { padding: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        .list div.highlighted { background: #38bdf8; color: #0f172a; }
+        .swap-btn { text-align: center; margin: 10px 0; font-size: 1.5rem; cursor: pointer; color: #38bdf8; }
+        button { width: 100%; padding: 15px; background: #3b82f6; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; }
+        #result { margin-top: 20px; text-align: center; font-size: 1.4rem; font-weight: bold; color: #38bdf8; }
+        /* Poore HTML page ki scrollbar ki styling */
+html::-webkit-scrollbar {
+    width: 10px; /* Scrollbar ki motayi */
+}
+
+html::-webkit-scrollbar-track {
+    background: #0f172a; /* Page ka background color */
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #3187ff; /* Scrollbar ka color */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #ffffff; /* Scrollbar ke aas paas border */
+}
+
+/* Hover karne par scrollbar ka color change */
+html::-webkit-scrollbar-thumb:hover {
+    background: #38bdf8; /* Blue color jo aapke converter mein hai */
+}
+        /* 1. Scrollbar ka width (Thickness) */
+.list::-webkit-scrollbar {
+    width: 6px; /* Slim and elegant */
+}
+
+/* 2. Scrollbar ka Track (Background) */
+.list::-webkit-scrollbar-track {
+    background: rgba(30, 41, 59, 0.5); /* Background color ke sath mix */
+    border-radius: 10px;
+}
+
+/* 3. Scrollbar ka Thumb (Moving part) */
+.list::-webkit-scrollbar-thumb {
+    background: #475569; /* Primary dark grey */
+    border-radius: 10px;
+    border: 1px solid #1e293b; /* Subtle border */
+    transition: background 0.3s ease;
+}
+
+/* 4. Interactive State (Hover Effect) */
+.list::-webkit-scrollbar-thumb:hover {
+    background: #38bdf8; /* Highlight Color (Blue) */
+    cursor: pointer;
+}
+        .header {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 25px;
+    padding: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    /* Glassmorphism effect */
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 2px solid #38bdf8;
+    border-radius: 8px;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+    
+    </style>
+</head>
+<body>
+
+<div class="container">
+<div class="header">Currency Convertor</div>
+<input type="number" id="amount" value="1.00" step="any" style="margin-bottom: 20px;">
+    
+    <div class="search-box">
+        <input type="text" id="fromInput" Value="SAR" placeholder="From (Search...)" autocomplete="off">
+        <div id="fromList" class="list"></div>
+    </div>
+
+    <div class="swap-btn" onclick="swap()">⇅</div>
+
+    <div class="search-box">
+        <input type="text" id="toInput" Value="PKR" placeholder="To (Search...)" autocomplete="off">
+        <div id="toList" class="list"></div>
+    </div>
+
+    <button onclick="convert()">Convert Now</button>
+    <div id="result">Result here</div>
+</div>
+
+<script>
+const countryData = [
+    { code: "AED", name: "United Arab Emirates", flag: "AE" },
+    { code: "AFN", name: "Afghanistan", flag: "AF" },
+    { code: "XCD", name: "East Caribbean", flag: "AG" },
+    { code: "ALL", name: "Albania", flag: "AL" },
+    { code: "AMD", name: "Armenia", flag: "AM" },
+    { code: "ANG", name: "Netherlands Antillean", flag: "AN" },
+    { code: "AOA", name: "Angola", flag: "AO" },
+    { code: "AQD", name: "Antarctica", flag: "AQ" },
+    { code: "ARS", name: "Argentina", flag: "AR" },
+    { code: "AUD", name: "Australia", flag: "AU" },
+    { code: "AZN", name: "Azerbaijan", flag: "AZ" },
+    { code: "BAM", name: "Bosnia and Herzegovina", flag: "BA" },
+    { code: "BBD", name: "Barbados", flag: "BB" },
+    { code: "BDT", name: "Bangladesh", flag: "BD" },
+    { code: "XOF", name: "West African", flag: "BE" },
+    { code: "BGN", name: "Bulgaria", flag: "BG" },
+    { code: "BHD", name: "Bahrain", flag: "BH" },
+    { code: "BIF", name: "Burundi", flag: "BI" },
+    { code: "BMD", name: "Bermuda", flag: "BM" },
+    { code: "BND", name: "Brunei", flag: "BN" },
+    { code: "BOB", name: "Bolivia", flag: "BO" },
+    { code: "BRL", name: "Brazil", flag: "BR" },
+    { code: "BSD", name: "Bahamas", flag: "BS" },
+    { code: "NOK", name: "Norway", flag: "BV" },
+    { code: "BWP", name: "Botswana", flag: "BW" },
+    { code: "BYR", name: "Belarus", flag: "BY" },
+    { code: "BZD", name: "Belize", flag: "BZ" },
+    { code: "CAD", name: "Canada", flag: "CA" },
+    { code: "CDF", name: "Congo", flag: "CD" },
+    { code: "XAF", name: "Central African", flag: "CF" },
+    { code: "CHF", name: "Switzerland", flag: "CH" },
+    { code: "CLP", name: "Chile", flag: "CL" },
+    { code: "CNY", name: "China", flag: "CN" },
+    { code: "COP", name: "Colombia", flag: "CO" },
+    { code: "CRC", name: "Costa Rica", flag: "CR" },
+    { code: "CUP", name: "Cuba", flag: "CU" },
+    { code: "CVE", name: "Cape Verde", flag: "CV" },
+    { code: "CYP", name: "Cyprus", flag: "CY" },
+    { code: "CZK", name: "Czech Republic", flag: "CZ" },
+    { code: "DJF", name: "Djibouti", flag: "DJ" },
+    { code: "DKK", name: "Denmark", flag: "DK" },
+    { code: "DOP", name: "Dominican Republic", flag: "DO" },
+    { code: "DZD", name: "Algeria", flag: "DZ" },
+    { code: "ECS", name: "Ecuador", flag: "EC" },
+    { code: "EEK", name: "Estonia", flag: "EE" },
+    { code: "EGP", name: "Egypt", flag: "EG" },
+    { code: "ETB", name: "Ethiopia", flag: "ET" },
+    { code: "EUR", name: "European Union", flag: "FR" },
+    { code: "FJD", name: "Fiji", flag: "FJ" },
+    { code: "FKP", name: "Falkland Islands", flag: "FK" },
+    { code: "GBP", name: "United Kingdom", flag: "GB" },
+    { code: "GEL", name: "Georgia", flag: "GE" },
+    { code: "GGP", name: "Guernsey", flag: "GG" },
+    { code: "GHS", name: "Ghana", flag: "GH" },
+    { code: "GIP", name: "Gibraltar", flag: "GI" },
+    { code: "GMD", name: "Gambia", flag: "GM" },
+    { code: "GNF", name: "Guinea", flag: "GN" },
+    { code: "GTQ", name: "Guatemala", flag: "GT" },
+    { code: "GYD", name: "Guyana", flag: "GY" },
+    { code: "HKD", name: "Hong Kong", flag: "HK" },
+    { code: "HNL", name: "Honduras", flag: "HN" },
+    { code: "HRK", name: "Croatia", flag: "HR" },
+    { code: "HTG", name: "Haiti", flag: "HT" },
+    { code: "HUF", name: "Hungary", flag: "HU" },
+    { code: "IDR", name: "Indonesia", flag: "ID" },
+    { code: "ILS", name: "Israel", flag: "IL" },
+    { code: "INR", name: "India", flag: "IN" },
+    { code: "IQD", name: "Iraq", flag: "IQ" },
+    { code: "IRR", name: "Iran", flag: "IR" },
+    { code: "ISK", name: "Iceland", flag: "IS" },
+    { code: "JMD", name: "Jamaica", flag: "JM" },
+    { code: "JOD", name: "Jordan", flag: "JO" },
+    { code: "JPY", name: "Japan", flag: "JP" },
+    { code: "KES", name: "Kenya", flag: "KE" },
+    { code: "KGS", name: "Kyrgyzstan", flag: "KG" },
+    { code: "KHR", name: "Cambodia", flag: "KH" },
+    { code: "KMF", name: "Comoros", flag: "KM" },
+    { code: "KPW", name: "North Korea", flag: "KP" },
+    { code: "KRW", name: "South Korea", flag: "KR" },
+    { code: "KWD", name: "Kuwait", flag: "KW" },
+    { code: "KYD", name: "Cayman Islands", flag: "KY" },
+    { code: "KZT", name: "Kazakhstan", flag: "KZ" },
+    { code: "LAK", name: "Laos", flag: "LA" },
+    { code: "LBP", name: "Lebanon", flag: "LB" },
+    { code: "LKR", name: "Sri Lanka", flag: "LK" },
+    { code: "LRD", name: "Liberia", flag: "LR" },
+    { code: "LSL", name: "Lesotho", flag: "LS" },
+    { code: "LTL", name: "Lithuania", flag: "LT" },
+    { code: "LVL", name: "Latvia", flag: "LV" },
+    { code: "LYD", name: "Libya", flag: "LY" },
+    { code: "MAD", name: "Morocco", flag: "MA" },
+    { code: "MDL", name: "Moldova", flag: "MD" },
+    { code: "MGA", name: "Madagascar", flag: "MG" },
+    { code: "MKD", name: "Macedonia", flag: "MK" },
+    { code: "MMK", name: "Myanmar", flag: "MM" },
+    { code: "MNT", name: "Mongolia", flag: "MN" },
+    { code: "MOP", name: "Macau", flag: "MO" },
+    { code: "MRO", name: "Mauritania", flag: "MR" },
+    { code: "MTL", name: "Malta", flag: "MT" },
+    { code: "MUR", name: "Mauritius", flag: "MU" },
+    { code: "MVR", name: "Maldives", flag: "MV" },
+    { code: "MWK", name: "Malawi", flag: "MW" },
+    { code: "MXN", name: "Mexico", flag: "MX" },
+    { code: "MYR", name: "Malaysia", flag: "MY" },
+    { code: "MZN", name: "Mozambique", flag: "MZ" },
+    { code: "NAD", name: "Namibia", flag: "NA" },
+    { code: "XPF", name: "French Pacific", flag: "NC" },
+    { code: "NGN", name: "Nigeria", flag: "NG" },
+    { code: "NIO", name: "Nicaragua", flag: "NI" },
+    { code: "NPR", name: "Nepal", flag: "NP" },
+    { code: "NZD", name: "New Zealand", flag: "NZ" },
+    { code: "OMR", name: "Oman", flag: "OM" },
+    { code: "PAB", name: "Panama", flag: "PA" },
+    { code: "PEN", name: "Peru", flag: "PE" },
+    { code: "PGK", name: "Papua New Guinea", flag: "PG" },
+    { code: "PHP", name: "Philippines", flag: "PH" },
+    { code: "PKR", name: "Pakistan", flag: "PK" },
+    { code: "PLN", name: "Poland", flag: "PL" },
+    { code: "PYG", name: "Paraguay", flag: "PY" },
+    { code: "QAR", name: "Qatar", flag: "QA" },
+    { code: "RON", name: "Romania", flag: "RO" },
+    { code: "RSD", name: "Serbia", flag: "RS" },
+    { code: "RUB", name: "Russia", flag: "RU" },
+    { code: "RWF", name: "Rwanda", flag: "RW" },
+    { code: "SAR", name: "Saudi Arabia", flag: "SA" },
+    { code: "SBD", name: "Solomon Islands", flag: "SB" },
+    { code: "SCR", name: "Seychelles", flag: "SC" },
+    { code: "SDG", name: "Sudan", flag: "SD" },
+    { code: "SEK", name: "Sweden", flag: "SE" },
+    { code: "SGD", name: "Singapore", flag: "SG" },
+    { code: "SKK", name: "Slovakia", flag: "SK" },
+    { code: "SLL", name: "Sierra Leone", flag: "SL" },
+    { code: "SOS", name: "Somalia", flag: "SO" },
+    { code: "SRD", name: "Suriname", flag: "SR" },
+    { code: "STD", name: "Sao Tome", flag: "ST" },
+    { code: "SVC", name: "El Salvador", flag: "SV" },
+    { code: "SYP", name: "Syria", flag: "SY" },
+    { code: "SZL", name: "Swaziland", flag: "SZ" },
+    { code: "THB", name: "Thailand", flag: "TH" },
+    { code: "TJS", name: "Tajikistan", flag: "TJ" },
+    { code: "TMT", name: "Turkmenistan", flag: "TM" },
+    { code: "TND", name: "Tunisia", flag: "TN" },
+    { code: "TOP", name: "Tonga", flag: "TO" },
+    { code: "TRY", name: "Turkey", flag: "TR" },
+    { code: "TTD", name: "Trinidad and Tobago", flag: "TT" },
+    { code: "TWD", name: "Taiwan", flag: "TW" },
+    { code: "TZS", name: "Tanzania", flag: "TZ" },
+    { code: "UAH", name: "Ukraine", flag: "UA" },
+    { code: "UGX", name: "Uganda", flag: "UG" },
+    { code: "USD", name: "United States", flag: "US" },
+    { code: "UYU", name: "Uruguay", flag: "UY" },
+    { code: "UZS", name: "Uzbekistan", flag: "UZ" },
+    { code: "VEF", name: "Venezuela", flag: "VE" },
+    { code: "VND", name: "Vietnam", flag: "VN" },
+    { code: "VUV", name: "Vanuatu", flag: "VU" },
+    { code: "YER", name: "Yemen", flag: "YE" },
+    { code: "ZAR", name: "South Africa", flag: "ZA" },
+    { code: "ZMK", name: "Zambia", flag: "ZM" },
+    { code: "ZWD", name: "Zimbabwe", flag: "ZW" }
+];
+   
+
+
+    let highlightedIndex = -1;
+    let cond = {
+        style:{
+            display:'none'
+        }
+    };
+    function renderList(listId, filterText = "") {
+        const list = document.getElementById(listId);
+        const filtered = countryData.filter(c => 
+            c.code.toLowerCase().includes(filterText.toLowerCase()) || 
+            c.name.toLowerCase().includes(filterText.toLowerCase())
+        );
+        
+        list.innerHTML = "";
+        highlightedIndex = -1;
+        filtered.forEach((c) => {
+            const div = document.createElement("div");
+            div.innerHTML = `<img src="https://flagsapi.com/${c.flag}/flat/24.png" alt="${c.flag}"> ${c.code} - ${c.name}`;
+            div.onclick = () => { selectItem(listId, c.code); };
+            
+            list.appendChild(div);
+        });
+        list.style.display = filtered.length > 0 ? 'block' : 'none';
+        cond.style.display= list !== cond ? 'none' : 'block'
+        cond =list
+    }
+
+    function selectItem(listId, code) {
+        document.getElementById(listId.replace('List', 'Input')).value = code;
+        document.getElementById(listId).style.display = 'none';
+    }
+
+    ['from', 'to'].forEach(type => {
+        const input = document.getElementById(type + 'Input');
+        const list = document.getElementById(type + 'List');
+
+        input.onkeydown = (e) => {
+            const items = list.querySelectorAll('div');
+            if (items.length === 0) return;
+
+            if (e.key === 'ArrowDown') {
+                highlightedIndex = (highlightedIndex + 1) % items.length;
+                updateHighlight(items);
+            } else if (e.key === 'ArrowUp') {
+                highlightedIndex = (highlightedIndex - 1 + items.length) % items.length;
+                updateHighlight(items);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (highlightedIndex > -1) items[highlightedIndex].click();
+            }
+        };
+        input.onclick = () => renderList(type + 'List');
+        input.oninput = (e) => renderList(type + 'List', e.target.value);
+    });
+
+    function updateHighlight(items) {
+        items.forEach((item, i) => item.classList.toggle('highlighted', i === highlightedIndex));
+        items[highlightedIndex].scrollIntoView({ block: 'nearest' });
+    }
+
+    function swap() {
+        let f = document.getElementById('fromInput');
+        let t = document.getElementById('toInput');
+        [f.value, t.value] = [t.value, f.value];
+    }
+
+    async function convert() {
+        let amt = document.getElementById("amount").value;
+        let f = document.getElementById("fromInput").value;
+        let t = document.getElementById("toInput").value;
+        let res = await fetch(`https://open.er-api.com/v6/latest/${f}`);
+        let data = await res.json();
+        console.dir(data)
+        document.getElementById("result").innerText = `${amt} ${f} = ${(amt * data.rates[t])} ${t}`;
+    }
+
+    document.onclick = (e) => {
+        if(!e.target.matches('input')) document.querySelectorAll('.list').forEach(l => l.style.display = 'none');
+    };
+</script>
+</body>
+</html>
