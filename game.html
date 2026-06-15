@@ -599,7 +599,7 @@
             }
         }
         
-        function playSound(type, volume=0.2) {
+        function playSound(type, volume) {
             const buf = defaultBuffers[type];
             if (!audioCtx || !buf) return;
             if (activeSource) { try { activeSource.stop(); } catch(e) {} }
@@ -1951,7 +1951,7 @@ if (gameState === 'gameOverAnimation' && gameOverStep > 0) return;
             if(onGround) {
                 dinoVy = JUMP_POWER;
                 onGround = false;
-                playSound('jump', 0.2);
+                playSound('jump', 1);
             }
         }
         
@@ -1990,7 +1990,7 @@ if (gameState === 'gameOverAnimation' && gameOverStep > 0) return;
             spawnDelay = 16;
             updateUI();
             updateSpeedByScore();
-            playSound('start', 0.2);
+            playSound('start', 1);
             invincibleTimer = 0;
             isSpeedRamping = false;
             scoreHold = false;
@@ -2010,12 +2010,12 @@ if (gameState === 'gameOverAnimation' && gameOverStep > 0) return;
             if (gameState === 'playing') {
                 gameState = 'paused';
                 document.getElementById('stopResumeBtn').innerText = '▶ RESUME';
-                playSound('stop', 0.22);
+                playSound('stop', 1);
                 window._pausedSpeed = currentSpeed;
             } else if (gameState === 'paused') {
                 gameState = 'playing';
                 document.getElementById('stopResumeBtn').innerText = '⏹ STOP';
-                playSound('resume', 0.2);
+                playSound('resume', 1);
                 invincibleTimer = 150;
                 scoreHold = true;
                 rampTargetSpeed = window._pausedSpeed || currentSpeed;
@@ -2024,7 +2024,7 @@ if (gameState === 'gameOverAnimation' && gameOverStep > 0) return;
         
         function restartGame() {
             freshStart();
-            playSound('restart', 0.2);
+            playSound('restart', 1);
             document.getElementById('stopResumeBtn').innerText = '⏹ STOP';
         }
         
@@ -2075,7 +2075,7 @@ if (gameState === 'gameOverAnimation' && gameOverStep > 0) return;
             } else spawnDelay--;
             
             if(checkCollision()) {
-                playSound('hit', 0.28);
+                playSound('hit', 1);
                 startGameOverAnimation();
             }
             
