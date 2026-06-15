@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MUHAMMAD ABDULSAMI | Portfolio</title>
+    <link rel="icon" type="image/png" href="portfolio.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&display=swap');
@@ -54,23 +55,34 @@
 
     <section id="about" class="py-24 px-10 max-w-4xl mx-auto text-center">
         <h2 class="text-4xl font-bold mb-12">About Me</h2>
-        <div class="glass p-10 rounded-3xl">
-            <p class="text-gray-400 text-lg mb-8">Dedicated developer with a unique background. I bridge the gap between technical complexity and user-friendly interfaces. Passionate about writing clean code and solving real-world problems.</p>
-            <div class="grid md:grid-cols-3 gap-6 text-sm">
-                <div class="bg-white/5 p-4 rounded-lg">
-                    <span class="block text-gray-500 uppercase text-xs mb-1">Name</span>
-                    <span class="font-bold">Muhammad AbdulSami</span>
-                </div>
-                <div class="bg-white/5 p-4 rounded-lg">
-                    <span class="block text-gray-500 uppercase text-xs mb-1">Phone</span>
-                    <span class="font-bold">+92 XXX XXXXXXX</span>
-                </div>
-                <div class="bg-white/5 p-4 rounded-lg">
-                    <span class="block text-gray-500 uppercase text-xs mb-1">Email</span>
-                    <span class="font-bold">yourname@email.com</span>
-                </div>
-            </div>
-        </div>
+ <div class="glass p-10 rounded-3xl border border-white/10 shadow-2xl">
+    <p class="text-gray-400 text-lg mb-10 leading-relaxed">
+        Dedicated developer with a unique background. I bridge the gap between technical complexity and user-friendly interfaces. Passionate about writing clean code and solving real-world problems.
+    </p>
+    
+    <div class="grid md:grid-cols-3 gap-6 text-sm">
+  <!-- Phone Block -->
+<div onclick="copyToClipboard('+923394218786','Phone-Number')" class="bg-white/5 p-6 rounded-2xl border border-white/5 hover:border-blue-500/30 transition-all duration-300 hover:bg-blue-500/5 group flex flex-col items-center justify-center">
+    <span class="block text-blue-500 uppercase text-[10px] tracking-[0.2em] font-bold mb-2">Phone</span>
+    <span class="font-semibold text-white group-hover:text-blue-200 transition-colors">+92 3394218786</span>
+</div>
+
+<!-- Email Block -->
+<div onclick="copyToClipboard('mns786777@gmail.com','Email')" class="bg-white/5 p-6 rounded-2xl border border-white/5 hover:border-purple-500/30 transition-all duration-300 hover:bg-purple-500/5 group flex flex-col items-center justify-center">
+    <span class="block text-purple-500 uppercase text-[10px] tracking-[0.2em] font-bold mb-2">Email</span>
+    <span class="font-semibold text-white group-hover:text-purple-200 transition-colors">mns786777@gmail.com</span>
+</div>
+
+<div onclick="copyToClipboard('237 Badar Block opposite Road Side mian Resturant Iftikhar Ahmad House','Address')" class="bg-white/5 p-6 rounded-2xl border border-white/5 hover:border-emerald-500/30 transition-all duration-300 hover:bg-emerald-500/5 group">
+        <span class="block text-emerald-500 uppercase text-[10px] tracking-[0.2em] font-bold mb-2">Address</span>
+    <div class="flex flex-wrap justify-center items-center gap-x-2 text-white font-semibold text-center">
+        <span class="group-hover:text-emerald-200 transition-colors duration-300">237 Badar Block opposite Road Side</span>
+        <span class="group-hover:text-emerald-200 transition-colors duration-300">mian Resturant</span>
+        <span class="group-hover:text-emerald-200 transition-colors duration-300">Iftikhar Ahmad House</span>
+    </div>        
+</div>
+    </div>
+</div>
     </section>
 
     <section id="skills" class="py-24 px-10">
@@ -129,39 +141,112 @@
             </div>
         </div>
     </section>
+<section id="projects" class="py-24 px-10">
+    <h2 class="text-4xl font-bold mb-12">Selected Projects</h2>
+    <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+        
+        <a href="/Portfolio/Dino.html" class="group block">
+            <div class="glass p-6 rounded-xl hover:bg-blue-500/10 transition cursor-pointer border border-white/5 hover:border-blue-500/50">
+                <img src="dicon.png" alt="Dino" class="w-10 h-10 mb-4 rounded-lg object-cover">
+                <h3 class="font-bold text-lg mb-4 text-white">Dino</h3>
+                <span class="text-xs uppercase tracking-widest text-gray-500 group-hover:text-white transition">-----</span>
+            </div>
+        </a>
 
-    <section id="projects" class="py-24 px-10">
-        <h2 class="text-4xl font-bold mb-12">Selected Projects</h2>
-        <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <script>
-                const projects = [
-                    { name: "Dino", route: "Portfolio/Dino.html" },
-                    { name: "Tic-Tac-Toe", route: "Portfolio/Tic-Tac-Toe.html" },
-                    { name: "Type-Test", route: "Portfolio/Type-Test.html" },
-                    { name: "Currency-Covertor", route: "Portfolio/Currency-Covertor.html" },
-                    { name: "CSS-Props", route: "Portfolio/CSS-Props.html" },
-                    { name: "Server-Side", route: "Portfolio" },
-                    { name: "Voice-Generator", route: "Portfolio" }
-                ];
+        <a href="/Portfolio/Tic-Tac-Toe.html" class="group block">
+            <div class="glass p-6 rounded-xl hover:bg-blue-500/10 transition cursor-pointer border border-white/5 hover:border-blue-500/50">
+                <img src="tictactoe.png" alt="Tic-Tac-Toe" class="w-10 h-10 mb-4 rounded-lg object-cover">
+                <h3 class="font-bold text-lg mb-4 text-white">Tic-Tac-Toe</h3>
+                <span class="text-xs uppercase tracking-widest text-gray-500 group-hover:text-white transition">-----</span>
+            </div>
+        </a>
 
-                projects.forEach((project, index) => {
-                    document.write(`
-                        <a href="/${project.route}" class="group block">
-                            <div class="glass p-6 rounded-xl hover:bg-blue-500/10 transition cursor-pointer border border-white/5 hover:border-blue-500/50">
-                                <span class="text-blue-500 font-bold block mb-2">0${index + 1}</span>
-                                <h3 class="font-bold text-lg mb-4 text-white">${project.name}</h3>
-                                <span class="text-xs uppercase tracking-widest text-gray-500 group-hover:text-white transition">View Case Study →</span>
-                            </div>
-                        </a>
-                    `);
-                });
-            </script>
-        </div>
-    </section>
+        <a href="/Portfolio/Type-Test.html" class="group block">
+            <div class="glass p-6 rounded-xl hover:bg-blue-500/10 transition cursor-pointer border border-white/5 hover:border-blue-500/50">
+                <img src="typetesticon.png" alt="Type-Test" class="w-10 h-10 mb-4 rounded-lg object-cover">
+                <h3 class="font-bold text-lg mb-4 text-white">Type-Test</h3>
+                <span class="text-xs uppercase tracking-widest text-gray-500 group-hover:text-white transition">-----</span>
+            </div>
+        </a>
+
+        <a href="/Portfolio/Currency-Covertor.html" class="group block">
+            <div class="glass p-6 rounded-xl hover:bg-blue-500/10 transition cursor-pointer border border-white/5 hover:border-blue-500/50">
+                <img src="convertor.png" alt="Currency-Convertor" class="w-10 h-10 mb-4 rounded-lg object-cover">
+                <h3 class="font-bold text-lg mb-4 text-white">Currency-Convertor</h3>
+                <span class="text-xs uppercase tracking-widest text-gray-500 group-hover:text-white transition">-----</span>
+            </div>
+        </a>
+
+        <a href="/Portfolio/CSS-Props.html" class="group block">
+            <div class="glass p-6 rounded-xl hover:bg-blue-500/10 transition cursor-pointer border border-white/5 hover:border-blue-500/50">
+                <img src="cssicon.png" alt="CSS-Props" class="w-10 h-10 mb-4 rounded-lg object-cover">
+                <h3 class="font-bold text-lg mb-4 text-white">CSS-Props</h3>
+                <span class="text-xs uppercase tracking-widest text-gray-500 group-hover:text-white transition">-----</span>
+            </div>
+        </a>
+
+        <a href="/Portfolio" class="group block">
+            <div class="glass p-6 rounded-xl hover:bg-yellow-500/10 transition cursor-pointer border border-white/5 hover:border-yellow-500/50">
+                <div class="w-10 h-10 mb-4 rounded-lg bg-gray-800 flex items-center justify-center text-gray-500 text-xs">N/A</div>
+                <h3 class="font-bold text-lg mb-4 text-white">Server-Side</h3>
+                <span class="text-xs uppercase tracking-widest text-yellow-500 group-hover:text-white transition">Pending...</span>
+            </div>
+        </a>
+
+        <a href="/Portfolio" class="group block">
+            <div class="glass p-6 rounded-xl hover:bg-yellow-500/10 transition cursor-pointer border border-white/5 hover:border-yellow-500/50">
+                <div class="w-10 h-10 mb-4 rounded-lg bg-gray-800 flex items-center justify-center text-gray-500 text-xs">N/A</div>
+                <h3 class="font-bold text-lg mb-4 text-white">Voice-Generator</h3>
+                <span class="text-xs uppercase tracking-widest text-yellow-500 group-hover:text-white transition">Pending...</span>
+            </div>
+        </a>
+
+    </div>
+</section>
 
     <footer class="p-10 text-center text-gray-600 text-sm">
         &copy; 2026 MUHAMMAD ABDULSAMI. ALL RIGHTS RESERVED.
     </footer>
+<div id="copyToast" class="fixed left-[-350px] bottom-10 bg-black/80 backdrop-blur-2xl border border-white/10 text-white px-6 py-4 rounded-r-2xl shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-[9999] flex items-center gap-4">
+    
+    <div class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 border border-blue-500/50">
+        <span class="text-blue-400 font-bold text-sm">✓</span>
+    </div>
 
+    <div class="flex flex-col">
+        <span class="text-[9px] uppercase tracking-[0.2em] font-bold text-blue-500" id="copyType">Label</span>
+        <span class="text-sm font-semibold tracking-wide text-white" id="copyMessage">Copied to clipboard!</span>
+    </div>
+</div>
+<script>
+    let toastTimeout;
+
+    function copyToClipboard(text, type) {
+        const toast = document.getElementById('copyToast');
+        const copyType = document.getElementById('copyType');
+        const copyMessage = document.getElementById('copyMessage');
+
+        clearTimeout(toastTimeout);
+
+        // Toast update karein
+        copyType.innerText = type; // e.g., "Phone"
+        copyMessage.innerText = "Copied to clipboard!";
+
+        toast.style.transition = "none";
+        toast.style.left = "-350px";
+        
+        setTimeout(() => {
+            toast.style.transition = "all 0.5s ease-in-out";
+            
+            navigator.clipboard.writeText(text).then(() => {
+                toast.style.left = "0px";
+
+                toastTimeout = setTimeout(() => {
+                    toast.style.left = "-350px";
+                }, 2000);
+            });
+        }, 50);
+    }
+</script>
 </body>
 </html>
