@@ -1,1032 +1,171 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" class="h-full">
 <head>
-    <title>TIC TAC TOE</title>
-    <link rel="icon" type="image/x-icon" href="tictactoe.png">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
+    <title>Elite Tic-Tac-Toe</title>
+    <link rel="icon" href="tictactoe.png">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-*{
-  margin: 0;
-  padding: 0;
-}
-/* body{
-background-image : url('https://hips.hearstapps.com/hmg-prod/images/lofoten-summer-landscape-royalty-free-image-1623252210.jpg?crop=1xw:1xh;center,top&resize=980:*');
-background-repeat: no-repeat;
-background-attachment: fixed;
-background-size: cover;
-    
-  
-} */
-/* Engine-level configuration for smooth color blending */
-@property --gradient-color-1 {
-  syntax: '<color>';
-  inherits: false;
-  initial-value: #1a1c29;
+        /* Scrollbar styling for Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
 
-@property --gradient-color-2 {
-  syntax: '<color>';
-  inherits: false;
-  initial-value: #080b11;
+::-webkit-scrollbar-track {
+    background: #090a0f;
 }
 
-html {
-  min-height: 100vh;
-  /* Applying modern multi-stop linear gradient */
-  background-image: linear-gradient(135deg, var(--gradient-color-1), var(--gradient-color-2));
-  background-attachment: fixed;
-  /* steps(1) ko hta kar normal smooth transitions curves define kiye hain */
-  animation: dynamicGradient 30s ease infinite;
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-@keyframes dynamicGradient {
-  0%, 100% {
-    --gradient-color-1: #1a1c29;
-    --gradient-color-2: #080b11;
-  }
-  10% {
-    --gradient-color-1: #0f2027;
-    --gradient-color-2: #203a43;
-  }
-  20% {
-    --gradient-color-1: #130cb7;
-    --gradient-color-2: #52e5e7;
-  }
-  30% {
-    --gradient-color-1: #2c3e50;
-    --gradient-color-2: #000000;
-  }
-  40% {
-    --gradient-color-1: #11998e;
-    --gradient-color-2: #38ef7d;
-  }
-  50% {
-    --gradient-color-1: #4e54c8;
-    --gradient-color-2: #8f94fb;
-  }
-  60% {
-    --gradient-color-1: #fc4a1a;
-    --gradient-color-2: #f7b733;
-  }
-  70% {
-    --gradient-color-1: #1a2a6c;
-    --gradient-color-2: #b21f1f;
-  }
-  80% {
-    --gradient-color-1: #00bf8f;
-    --gradient-color-2: #001510;
-  }
-  90% {
-    --gradient-color-1: #833ab4;
-    --gradient-color-2: #fd1d1d;
-  }
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
+/* Firefox ke liye */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) #090a0f;
+}
+        body { 
+            min-height: 100dvh; 
+            overflow-y: auto; 
+            background: #090a0f; 
+            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #090a0f 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 10px;
+        }
+        
+        .glass-panel { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        }
 
-@media (max-width:1500px){
-.hidebox{
-  display: none;
-}
-.container{
- height: 100vh;
- position: relative;
- display: flex;
- justify-content: center;
- align-items: center;
-}
-.game{
-  margin:1.5% 35%;
-  height: 70vh;
-  aspect-ratio: 1/1;
-  display:flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap:10px;
-  border-radius: 10px;
-  background: rgba(0, 81, 255, 0.196);
- 
-}
-.box{
-  height:calc(33.3% - 10px);
-  width:calc(33.3% - 10px);
-  border-radius: 25%;
-  background: transparent;
-  border: none;
-  box-shadow: 0 0 0 3px rgb(0, 0, 0);
-  text-align: center;
-  text-shadow:0 2px 2px blue ;
-  font-size: 15vh;
-  display:flex ;
-  justify-content: center;
-  align-items: center;
+        .box { 
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        
+        .blur-game { 
+            filter: blur(2px); 
+            transition: all 0.5s ease; 
+        }
 
-}
-
-
-#submitbtn{
-  z-index: 3;
-  position: absolute;
-  cursor: pointer;
-  top:15%;
-  left:22%;
-  width:4% ;
-  height: 4%;
-  font-size:10px ;
-  font-weight: 700;
-  color: aliceblue;
-  border:none;
-  border-top-right-radius: 5px ;
-  border-bottom-right-radius: 5px ;
-background-color:rgba(255, 255, 255, 0.3);
-  text-align: center;
-  display:flex ;
-  justify-content: center;
-  align-items: center;
-}
-#submitbtn:hover{
-  background-color:rgba(114, 204, 226, 0.445);
-
-}
-#username1::placeholder{
-  color:white;
-  font-size:110% ;
-  text-align: center;
-  display:flex ;
-  justify-content: center;
-  align-items: center;
-}
-#username1{
-  top:15%;
-  left:7.5%;
-  width: 14.5%;
-  height: 4%;
-  font-size:90% ;
-  font-weight: 700;
-  color: aliceblue;
-  border: none;
-  border-top-left-radius: 5px ;
-  border-bottom-left-radius: 5px ;
-  background-color:rgba(255, 255, 255, 0.15);
-  text-align: center;
-  z-index: 3;
-  position: absolute;
-  display:flex ;
-  justify-content: center;
-  align-items: center;
-}
-.username2{
-  top:15%;
-  left:7.5%;
-  width: 14.5%;
-  height: 4%;
-  font-size:90%;
-  font-weight: 700;
-  color: aliceblue;
-  border: none;
-  border-top-left-radius: 5px ;
-  border-bottom-left-radius: 5px ;
-  background-color:rgba(255, 255, 255, 0.15);
-  text-align: center;
-  z-index: 3;
-  position: absolute;
-  display:flex ;
-  justify-content: center;
-  align-items: center;
-
-}
-.username2::placeholder{
-  color: white;
-  font-size: 110%;
-  text-align: center;
-  display:flex ;
-  justify-content: center;
-  align-items: center;
-}
-.hideuser2{
-  display: none;
-}
-
-.gametittle{
-  top: 0%;
-  font-size: 200%;
-  color: #000000;
-  text-shadow: 0 2px 0px whitesmoke;
-  position: absolute;
-  z-index: 6;
-}
-.tcont{
-  height: 10vh;
-  width: 100%;
-  z-index: 4 ;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.resetbtn{
-  cursor: pointer;
-  top:15%;
-  left: 2%;
-  height:5%;
-  width:7%;
-  color: azure;
-  font-size:95% ;
-  font-weight: 700;
-  text-align: center;
-  border-radius: 10px;
-  border: none;
-  background-color:rgba(0, 0, 255, 0.457);
-  box-shadow: 0 0 0px 5px  rgba(0, 0, 0, 0.427);
-  position: absolute;
-  z-index: 3;
-  display:flex ;
-  justify-content: center;
-  align-items: center;
-}
-.hiderstbtn{
-  display: none;
-}
-.newbtn{
-  cursor: pointer;
-  top:15%;
-  left: 15%;
-  height:5vh;
-  width:17vh;
-  font-size:13px ;
-  font-weight: 700;
-  border-radius: 10px;
-  text-align: center;
-  border: none;
-  background-color:#00ff0058 ;
-  box-shadow: 0 0 0 4px rgba(0, 68, 255, 0.427);
-  text-shadow: 0 2px 0 white ;
-  position: absolute;
-  z-index: 3;
-  
-}
-.hidenewbtn{
-  display: none;
-}
-.msgcontainer {
-  top: 20%;
-  left: 0.25%;
-  height: 60%;
-  width: 28%;
-  position: absolute;
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;     
-  box-sizing: border-box;}
-.hide{
-  display: none;
-}
-.msg {
-  top:0%;
-  font-size: 4vw;           
-  font-weight: 700;
-  text-shadow: 0 2px 0 rgb(255, 255, 255);
-  color: rgb(66, 196, 243);
-  text-align: center;
-  max-width: 100%;
-  word-wrap: break-word;
-  line-height: 100px;
-}
-
-.msg2 {
-  font-size: 3.5vw;
-  font-weight: 700;
-  text-shadow: 0 5px 10px rgb(0, 0, 0);
-  color: rgb(255, 255, 255);
-  text-align: center;
-  max-width: 100%;
-  word-wrap: break-word;
-  line-height: 100px;
-
-}
-
-
-}
-@media (max-width:1050px){
-  #submitbtn{
-    top:16%;
-    left:16%;
-    width:4% ;
-    height: 3%;
-    font-size: 8px;
-  }
-
-  #username1::placeholder{
-    font-size:100% ;
-  }
-
-  #username1{
-    top:16%;
-    left:3.5%;
-    width: 12%;
-    height: 3%;
-    font-size:85% ;
-    font-weight: 700;
-    color: aliceblue;
-    border: none;
-    text-align: center;
-    z-index: 3;
-    position: absolute;
-    display:flex ;
-    justify-content: center;
-    align-items: center;
-  }
-  .username2{
-    top:16%;
-    left:3.5%;
-    width: 12%;
-    height: 3%;
-    font-size:85%;
-    font-weight: 700;
-    color: aliceblue;
-    border: none;
-    text-align: center;
-    z-index: 3;
-    position: absolute;
-    display:flex ;
-    justify-content: center;
-    align-items: center;
-  
-  }
-  .username2::placeholder{
-    font-size: 110%;
-  }
-  .hideuser2{
-    display: none;
-  }
-.resetbtn{
-  top:16.5%;
-  left: 2%;
-  height:3.5vh;
-  width:11vh;
-  color: azure;
-  font-size:95% ;
-  font-weight: 700;
-  text-align: center;
-  border-radius: 10px;
-  border: none;
-  background-color:blue;
-  box-shadow: 0 0 0px 5px  black;
-  position: absolute;
-  z-index: 3;
-
-}
-.hiderstbtn{
-  display: none;
-}
-.newbtn{
-  top:16.5%;
-  left: 12%;
-  height:3.5vh;
-  width:10vw;
-  font-size:13px ;
-  font-weight: 700;
-  border-radius: 8px;
-  text-align: center;
-  border: none;
-  background-color:#00ff00 ;
-  box-shadow: 0 0 0 4px rgb(0, 68, 255);
-  text-shadow: 0 2px 0 white ;
-  position: absolute;
-  z-index: 3;
-  
-}
-.hidenewbtn{
-  display: none;
-}
-.msgcontainer {
-  top: 20%;
-  left: 2%;
-  height: 60%;
-  width: 20%;
-  position: absolute;
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;     
-  box-sizing: border-box;
-}
-.hide{
-  display: none;
-}
-.msg {
-  top:0%;
-  font-size: 2.75vw;           
-  font-weight: 700;
-  text-shadow: 0 2px 0 rgb(255, 255, 255);
-  color: rgb(66, 196, 243);
-  text-align: center;
-  max-width: 100%;
-  word-wrap: break-word;
-  line-height: 80px;
-}
-
-.msg2 {
-  font-size: 3.5vw;
-  font-weight: 700;
-  text-shadow: 0 5px 10px rgb(0, 0, 0);
-  color: rgb(255, 255, 255);
-  text-align: center;
-  max-width: 100%;
-  word-wrap: break-word;
-  line-height: 100px;
-
-}
-}
-
-@media (max-width:850px){
-  .gametittle{
-    font-size: 150%;
-  }
-  .tcont{
-    top: 0%;
-    height: 2vh;
-    width: 100%;
-    z-index: 4 ;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  #submitbtn{
-    top:7%;
-    left: 60.75%;
-    width:7% ;
-    height: 5%;
-    font-size:10px;
-    font-weight: 300;
-    color: rgb(231, 236, 240);
-
-  }
-  #username1::placeholder{
-    font-size:110% ;
-  }
-  #username1{
-    position: absolute;
-    top:7%;
-    left: 32.25%;
-    width: 28%;
-    height: 5%;
-    font-size:100% ;
-    font-weight: 700;
-    color: aliceblue;
-    border: none;
-    text-align: center;
-    display:flex ;
-    justify-content: center;
-    align-items: center;
-  }
-  .username2{
-    position: absolute;
-    top:7%;
-    left: 32.25%;
-    width: 28%;
-    height: 5%;
-    font-size:85%;
-    font-weight: 700;
-    color: aliceblue;
-    border: none;
-    text-align: center;
-    display:flex ;
-    justify-content: center;
-    align-items: center;
-  
-  }
-  .username2::placeholder{
-    font-size: 110%;
-  }
-  .hideuser2{
-    display: none;
-  }
-.resetbtn{
-  top:8%;
-  left: 30.5%;
-  height:3.5vh;
-  width:10%;
-  color: azure;
-  font-size:70% ;
-  font-weight: 700;
-  text-align: center;
-  border-radius: 10px;
-  border:  none;
-  background-color:blue;
-  box-shadow: 0 0 0px 5px  black;
-  position: absolute;
-  z-index: 3;
-
-}
-.hiderstbtn{
-  display: none;
-}
-.newbtn{
-  top:8%;
-  left:59%;
-  height:3.5vh;
-  width:10vw;
-  font-size:13px ;
-  font-weight: 700;
-  border-radius: 8px;
-  text-align: center;
-  border: none;
-  background-color:#00ff00 ;
-  box-shadow: 0 0 0 4px rgb(0, 68, 255);
-  text-shadow: 0 2px 0 white ;
-  position: absolute;
-  z-index: 3;
-  
-}
-.hidenewbtn{
-  display: none;
-}
-.msgcontainer {
-  top: 32.5%;
-  left:0%;
-  height: 35%;
-  width: 100%;
-  position: absolute;
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;     
-  box-sizing: border-box;
-}
-.hide{
-  display: none;
-}
-.msg {
-  top:0%;
-  font-size: 50px;           
-  font-weight: 700;
-  text-shadow: 0 2px 0 rgb(255, 255, 255);
-  color: rgb(66, 196, 243);
-  text-align: center;
-  max-width: 100%;
-  word-wrap: break-word;
-  line-height: 100%;
-}
-
-.msg2 {
-  font-size: 50px;
-  font-weight: 700;
-  text-shadow: 0 5px 10px rgb(0, 0, 0);
-  color: rgb(255, 255, 255);
-  text-align: center;
-  max-width: 100%;
-  word-wrap: break-word;
-  line-height: 50px;
-
-}
-
-}
-@media(max-height:415px){
-  .gametittle{
-    display: none;
-  }
-  .tcont{
-    top: 0%;
-    height: 2vh;
-    width: 100%;
-    z-index: 4 ;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: none;
-  }
-}
-@media(max-height:450px){
-  .container{
- height: 450px;
- width: 100vw;
-}
-  .gametittle{
-    font-size: 100%;
-  }
-  .tcont{
-    top: 0%;
-    height: 2vh;
-    width: 100%;
-    z-index: 4 ;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  #submitbtn{
-    top:5%;
-    left: 61.5%;
-    width:8% ;
-    height: 20px;
-    font-size: 10px;
-    font-weight: 700;
-    color: rgb(231, 236, 240);
-  }
-  #username1::placeholder{
-    font-size:110% ;
-  }
-  #username1{
-    position: absolute;
-    top:5%;
-    left: 30.5%;
-    width: 30%;
-    height: 20px;
-    font-size:100% ;
-    font-weight: 700;
-    color: aliceblue;
-    border: none;
-    text-align: center;
-    display:flex ;
-    justify-content: center;
-    align-items: center;
-  }
-  .username2{
-    position: absolute;
-    top:5%;
-    left: 30.5%;
-    width: 30%;
-    height: 20px;
-    font-size:100%;
-    font-weight: 700;
-    color: aliceblue;
-    border: none;
-    text-align: center;
-    display:flex ;
-    justify-content: center;
-    align-items: center;
-  
-  }
-  .username2::placeholder{
-    font-size: 110%;
-  }
-  .hideuser2{
-    display: none;
-  }
-.resetbtn{
-  top:5%;
-  left: 25%;
-  height:15px;
-  width:10%;
-  color: azure;
-  font-size:70% ;
-  font-weight: 700;
-  text-align: center;
-  border-radius: 10px;
-  border:  none;
-  background-color:blue;
-  box-shadow: 0 0 0px 5px  black;
-  position: absolute;
-  z-index: 3;
-
-}
-.hiderstbtn{
-  display: none;
-}
-.newbtn{
-  top:5%;
-  left:55%;
-  height:15px;
-  width:20%;
-  font-size:13px ;
-  font-weight: 700;
-  border-radius: 8px;
-  text-align: center;
-  border: none;
-  background-color:#00ff00 ;
-  box-shadow: 0 0 0 4px rgb(0, 68, 255);
-  text-shadow: 0 2px 0 white ;
-  position: absolute;
-  z-index: 3;
-  
-}
-.hidenewbtn{
-  display: none;
-}
-.msgcontainer {
-  top: 32.5%;
-  left:0%;
-  height: 180px;
-  width: 100%;
-  position: absolute;
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;     
-  box-sizing: border-box;
-}
-.hide{
-  display: none;
-}
-.msg {
-  top:0%;
-  font-size: 50px;           
-  font-weight: 700;
-  text-shadow: 0 2px 0 rgb(255, 255, 255);
-  color: rgb(66, 196, 243);
-  text-align: center;
-  max-width: 100%;
-  word-wrap: break-word;
-  line-height: 100%;
-}
-
-.msg2 {
-  font-size: 50px;
-  font-weight: 700;
-  text-shadow: 0 5px 10px rgb(0, 0, 0);
-  color: rgb(255, 255, 255);
-  text-align: center;
-  max-width: 100%;
-  word-wrap: break-word;
-  line-height: 50px;
-
-}
-
-}
-
+        /* Neon Glows */
+        .text-sky-400 { text-shadow: 0 0 15px #38bdf8; }
+        .text-rose-400 { text-shadow: 0 0 15px #fb7185; }
+        
+        .game-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 400px;
+        }
+        
     </style>
+</head>
 <body>
-    <button class="resetbtn hiderstbtn">RESET</button>
-    <input type="text" id="username1" placeholder="Player 1" value="">
-    <input type="text" class="username2 hideuser2" placeholder="Player 2" value="">
-    <button id="submitbtn">Submit</button>
-    <button class="newbtn hidenewbtn">NEW GAME</button>
 
-    <div class="msgcontainer hide"><p class="msg"></p><p class="msg2"></p></div>
-    <main>
-       <div class="tcont" ><h1 class="gametittle">TIC TAC TOE</h1></div>
-        <div class="container hidebox">
-        <div class="game">
+    <div class="game-wrapper">
+        <h1 class="text-2xl md:text-3xl font-bold tracking-[0.4em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-rose-400">Tic Tac Toe</h1>
 
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
+        <div id="setup" class="glass-panel p-8 rounded-3xl w-full flex flex-col gap-5 text-white">
+            <input id="p1" class="bg-white/5 border border-white/10 p-3 rounded-xl outline-none focus:border-blue-500 transition-all" placeholder="Player 1 (O)">
+            <input id="p2" class="bg-white/5 border border-white/10 p-3 rounded-xl outline-none focus:border-rose-500 transition-all" placeholder="Player 2 (X)">
+            <button id="submit" class="bg-gradient-to-r from-blue-600 to-indigo-600 font-bold py-3 rounded-xl hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] transition-all">INITIALIZE</button>
+        </div>
 
+        <div id="game-ui" class="hidden flex flex-col items-center gap-6 w-full text-white">
+            <div class="glass-panel px-8 py-3 rounded-full flex gap-10 font-bold tracking-widest text-xs uppercase border-white/20">
+                <div><span id="name1" class="text-sky-400">P1</span>: <span id="score1">0</span></div>
+                <div><span id="name2" class="text-rose-400">P2</span>: <span id="score2">0</span></div>
+            </div>
+
+            <div class="relative">
+                <div id="board" class="grid grid-cols-3 gap-3 p-3 bg-white/5 rounded-3xl border border-white/5">
+                    <script>for(let i=0; i<9; i++) document.write(`<button class="box w-20 h-20 md:w-28 md:h-28 glass-panel rounded-2xl text-4xl font-light flex items-center justify-center hover:bg-white/10"></button>`);</script>
+                </div>
+                <div id="winner-overlay" class="absolute inset-0 hidden flex items-center justify-center z-10">
+                    <h2 id="winner-text" class="text-xl md:text-2xl font-bold bg-black/80 px-8 py-4 rounded-2xl border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.2)]"></h2>
+                </div>
+            </div>
+
+            <div class="flex gap-4">
+                <button id="newgame" class="px-6 py-2 rounded-xl border border-white/10 hover:bg-white hover:text-black transition-all text-[10px] md:text-xs uppercase tracking-widest">Next Round</button>
+                <button id="reset" class="px-6 py-2 rounded-xl border border-white/10 hover:bg-red-900/50 hover:border-red-500 transition-all text-[10px] md:text-xs uppercase tracking-widest">Reset All</button>
+            </div>
+        </div>
     </div>
-    </div>
-    
-    </main>
-    <script >
-let numbers = [[1000],[2000], [3000]];
-let usFormat = numbers.toLocaleString('en-US');
-let body=document.querySelector("body");
-let btn=document.querySelectorAll(".box");
-let rstbtn=document.querySelector(".resetbtn");
-let newbtn=document.querySelector(".newbtn");
-let hide=document.querySelector(".hide");
-let msg=document.querySelector(".msg");
-let msg2=document.querySelector(".msg2");
-let username1=document.querySelector("#username1");
-let username2=document.querySelector(".username2");
-let submitbtn=document.querySelector("#submitbtn");
-let hidebox=document.querySelector(".container");
-username1.focus();
-let turnO=true;
-let step = 1;
-const winpatterns=[
-   [0,1,2],
-   [0,3,6],
-   [0,4,8],
-   [1,4,7],
-   [2,5,8],
-   [2,4,6],
-   [3,4,5],
-   [6,7,8],
-];
-window.addEventListener("resize", function(){
 
-   if(window.innerWidth <= 850 && msg.innerText!==""){
-     hidebox.classList.remove("container");
-   }
-   if(window.innerWidth > 850 && window.innerHeight > 450){
-     hidebox.classList.add("container");
-   }
-   if(window.innerWidth > 850 && window.innerHeight > 0 && msg.innerText!==""  &&  window.innerHeight < 450 ){
-    hidebox.classList.remove("container");
-   }
-   if(window.innerWidth <= 850){
-      hidebox.classList.remove("container");
-    }
-    if(msg.innerText ===""){
-      hidebox.classList.add("container");
-    }
-   
-});
-function handlevent(){
-    if(window.innerWidth <= 850){
-      hidebox.classList.remove("container");
-    }
+    <script>
+        let p1N, p2N, turnO = true, s1 = 0, s2 = 0;
+        const boxes = document.querySelectorAll(".box");
+        const board = document.getElementById("board");
+        const overlay = document.getElementById("winner-overlay");
 
+        document.getElementById("submit").onclick = () => {
+            p1N = document.getElementById("p1").value || "Player 1";
+            p2N = document.getElementById("p2").value || "Player 2";
+            document.getElementById("name1").innerText = p1N;
+            document.getElementById("name2").innerText = p2N;
+            document.getElementById("setup").classList.add("hidden");
+            document.getElementById("game-ui").classList.remove("hidden");
+        };
 
-};
-username1.addEventListener("input",handlevent);
+        boxes.forEach(box => {
+            box.onclick = () => {
+                if(!box.innerText) {
+                    box.innerText = turnO ? "O" : "X";
+                    box.classList.add(turnO ? "text-sky-400" : "text-rose-400");
+                    turnO = !turnO;
+                    checkWinner();
+                }
+            };
+        });
 
-submitbtn.addEventListener("click",function(){
-   if(step === 1){
-      if (username1.value.length > 10) {
-         alert("Name should be 10 characters or less.");
-         username1.value="";
-         return;
-      }
-      if (username1.value.length > 7 && window.innerWidth<=1050) {
-         alert("Name should be 7 characters or less.");
-         username1.value="";
-         return;
-      }
-      hidebox.classList.add("container");
-      username1.style.display="none";
-      username2.classList.remove("hideuser2");
-      username2.focus();
-      step = 2;
-   }else if(step === 2){
-      if (username2.value.length > 10) {
-         alert("Name should be 10 characters or less.");
-         username2.value="";
-         return;
-      }
-      if (username2.value.length > 7 && window.innerWidth<=1050) {
-         alert("Name should be 7 characters or less.");
-         username2.value="";
-         return;
-      }
-      username2.classList.add("hideuser2");
-      btn.forEach((boxes)=>{
-         boxes.disabled=false;
-         boxes.style.cursor="grab";
-         newbtn.classList.remove("hidenewbtn");
-         rstbtn.classList.remove("hiderstbtn");
-         step=3;
-      submitbtn.style.display="none";
-      });
-   }});
+        function checkWinner() {
+            const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            for(let w of wins) {
+                let [a,b,c] = [boxes[w[0]].innerText, boxes[w[1]].innerText, boxes[w[2]].innerText];
+                if(a && a === b && b === c) {
+                    showWinner(a === 'O' ? p1N : p2N);
+                    if(a === 'O') s1++; else s2++;
+                    document.getElementById("score1").innerText = s1;
+                    document.getElementById("score2").innerText = s2;
+                    return;
+                }
+            }
+            if([...boxes].every(b => b.innerText)) showWinner("Draw");
+        }
 
-username1.addEventListener("keydown", function(e) {
-   if (e.key === "Enter") {
-            if (username1.value.length > 10) {
-         alert("Name should be 10 characters or less.");
-         username1.value="";
-         return;
-      }
-      if (username1.value.length > 7 && window.innerWidth<=1050) {
-         alert("Name should be 7 characters or less.");
-         username1.value="";
-         return;
-      }
-      hidebox.classList.add("container");
-      username1.style.display="none";
-      username2.classList.remove("hideuser2");
-      username2.focus();
-      step=2;
- }
- });
- 
- username2.addEventListener("keydown", function(e) {
-   if (e.key === "Enter") {
-      if (username2.value.length > 10) {
-         alert("Name should be 10 characters or less.");
-         username2.value="";
-         return;
-      }
-      if (username2.value.length > 7 && window.innerWidth<=1050) {
-         alert("Name should be 7 characters or less.");
-         username2.value="";
-         return;
-      }
-   username2.classList.add("hideuser2");
-   btn.forEach((boxes)=>{
-      boxes.disabled=false;
-      newbtn.classList.remove("hidenewbtn");
-      rstbtn.classList.remove("hiderstbtn");
-      submitbtn.style.display="none";
-   });}}); 
+        function showWinner(text) {
+            board.classList.add("blur-game");
+            overlay.classList.remove("hidden");
+            document.getElementById("winner-text").innerText = text === "Draw" ? "Match Draw!" : text + " Wins!";
+            boxes.forEach(b => b.disabled = true);
+        }
 
-body.addEventListener("keydown",function(e){
-if(e.key==="Delete"){
-newbutton();
-}
-});
+        document.getElementById("newgame").onclick = () => {
+            board.classList.remove("blur-game");
+            overlay.classList.add("hidden");
+            boxes.forEach(b => { b.innerText = ""; b.disabled = false; b.classList.remove("text-sky-400", "text-rose-400"); });
+            turnO = true;
+        };
 
-const resetbutton=()=>{
-username1.style.display="";
-username1.value="";
-username2.value="";
-turnO=true;
-msg.innerText="";
-username1.focus();
-hidebox.classList.add("container");
-step=1;
-btn.forEach((boxes)=>{
-   boxes.disabled=true;
-});
-rstbtn.classList.add("hiderstbtn");
-newbtn.classList.add("hidenewbtn");
-submitbtn.style.display="";
-enableboxes();
-hide.classList.add("hide");
-};
-
-
-const newbutton=()=>{
-   turnO =true;
-   btn.forEach((boxes)=>{
-      boxes.disabled=false;
-   })
-   hidebox.classList.add("container");
-   enableboxes();
-   hide.classList.add("hide");
-   msg.innerText="";
-};
-
-const disableboxes=()=>{
-   for(let boxes of btn){
-      boxes.disabled=true;
-      };};
-const enableboxes=()=>{
-   for(let boxes of btn){
-     boxes.innerText="";
-     boxes.style.background="transparent";
-   }
-};
-
-btn.forEach((box) => {
-   box.disabled=true;
-   box.addEventListener("click",()=>{
-      if(turnO){
-         box.innerText="O";
-         box.style.color="white";
-         turnO=false;
-         box.style.background="linear-gradient(to bottom,blue,#25ced1 ,#ffffff)";
-      }else{
-         box.innerText="X";
-         box.style.color="blue";
-
-         turnO=true;
-         box.style.background="linear-gradient(to bottom,#06d6a0,rgb(0, 247, 12),#06bee1)";
-
-      }
-      box.disabled=true;
-      checkWinner();
-
-      });
-
-   });
-
-
-   const showwinner = (winner)=>{
-      if(window.innerWidth > 850 && window.innerHeight > 0 &&  window.innerHeight < 450 ){
-         setTimeout(function() {
-            hidebox.classList.remove("container");
-            msg.innerText=`Congratulations\nWinner Is:\n `;
-            msg2.innerText=`${winner}`;
-            hide.classList.remove("hide");
-         }, 400);
-       }
-      if(window.innerWidth<=850 ){  
-         setTimeout(function() {
-            hidebox.classList.remove("container");
-            msg.innerText=`Congratulations\nWinner Is:\n `;
-            msg2.innerText=`${winner}`;
-            hide.classList.remove("hide");
-         }, 400);
-      }
-      if(window.innerWidth >= 851){
-         msg.innerText=`Congratulations\nWinner Is:\n `;
-         msg2.innerText=`${winner}`;
-         hide.classList.remove("hide");
-      }
-
-};
-const checkWinner = () => {
-   for(let pattern of winpatterns){
-   let   posval1=btn[pattern[0]].innerText;
-   let   posval2=btn[pattern[1]].innerText;
-   let   posval3=btn[pattern[2]].innerText;
-   if(posval1!= ""&& posval2 !=""&& posval3 !=""){
-       if(posval1===posval2 && posval2 === posval3){
-         let winner;
-           if(posval1==="O"){
-           winner = username1.value==""?"Player 1":username1.value;
-           }if(posval1==="X"){
-           winner = username2.value==""?"Player 2":username2.value
-           }
-
-      disableboxes();
-      showwinner(winner);
-       }}}};
-
-       rstbtn.addEventListener("click", resetbutton);
-       newbtn.addEventListener("click", newbutton);
+        document.getElementById("reset").onclick = () => location.reload();
     </script>
 </body>
 </html>
