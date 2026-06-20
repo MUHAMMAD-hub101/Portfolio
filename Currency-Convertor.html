@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pro Currency Converter</title>
-    <link rel="icon" type="image/png" href="converter.png">
     <style>
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
@@ -76,7 +75,45 @@ html::-webkit-scrollbar-thumb:hover {
     border-radius: 8px;
     text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
 }
-    
+    /* Button ki styling (ispe position relative zaroori hai) */
+#convert {
+  position: relative;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Loader ka design (Chota spinner button ke hisab se) */
+.btn-loader {
+  display: none; /* Shuru me hidden */
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  
+  /* Button ke center me lane ke liye */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Jab button loading state me hoga */
+#convert.is-loading .btn-text {
+  visibility: hidden; /* Text ko chhupa do par jagah wahi rhegi */
+}
+
+#convert.is-loading .btn-loader {
+  display: block; /* Loader ko dikhao */
+}
+
+/* Spinner Animation */
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
     </style>
 </head>
 <body>
@@ -96,9 +133,12 @@ html::-webkit-scrollbar-thumb:hover {
         <input type="text" id="toInput" Value="PKR" placeholder="To (Search...)" autocomplete="off">
         <div id="toList" class="list"></div>
     </div>
+<button id="convert">
+  <span class="btn-text">Convert Now</span>
+  <div id="loader" class="btn-loader"></div>
+</button>
 
-    <button onclick="convert()">Convert Now</button>
-    <div id="result">Result here</div>
+<div id="result">Result here</div>
 </div>
 
 <script>
@@ -331,16 +371,37 @@ const countryData = [
         let t = document.getElementById('toInput');
         [f.value, t.value] = [t.value, f.value];
     }
+const btn = document.getElementById("convert");
+const result = document.getElementById("result");
 
-    async function convert() {
+btn.addEventListener('click', (e) => {
+    (async () => {
         let amt = document.getElementById("amount").value;
         let f = document.getElementById("fromInput").value;
         let t = document.getElementById("toInput").value;
-        let res = await fetch(`https://open.er-api.com/v6/latest/${f}`);
-        let data = await res.json();
-        console.dir(data)
-        document.getElementById("result").innerText = `${amt} ${f} = ${(amt * data.rates[t])} ${t}`;
-    }
+
+        // 1. Button ko loading state me dalo aur disable karo
+        btn.classList.add("is-loading");
+        btn.disabled = true;
+
+        try {
+            let res = await fetch(`https://open.er-api.com/v6/latest/${f}`);
+            let data = await res.json();
+
+            result.innerText = `${amt} ${f} = ${(amt * data.rates[t]).toFixed(2)} ${t}`;
+        } catch (error) {
+            console.error("Kuch galti hui:", error);
+            result.innerText = "Error fetching data. Please try again.";
+        } finally {
+            // 2. API call khatam hote hi loader hatao aur button enable karo
+            setTimeout(()=>{
+            btn.classList.remove("is-loading");
+            btn.disabled = false;
+            },100)
+
+        }
+    })();
+});
 
     document.onclick = (e) => {
         if(!e.target.matches('input')) document.querySelectorAll('.list').forEach(l => l.style.display = 'none');
