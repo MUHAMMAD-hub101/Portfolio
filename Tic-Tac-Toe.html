@@ -88,7 +88,7 @@
             <button id="submit" class="bg-gradient-to-r from-blue-600 to-indigo-600 font-bold py-3 rounded-xl hover:shadow-[0_0_20px_rgba(37,99,235,0.5)] transition-all">Play</button>
         </div>
 
-        <div id="game-ui" class="hidden flex flex-col items-center gap-6 w-full text-white">
+        <div id="game-ui" class="hidden flex flex-col items-center gap-4 w-full text-white">
             <div class="glass-panel px-8 py-3 rounded-full flex gap-10 font-bold tracking-widest text-xs uppercase border-white/20">
                 <div><span id="name1" class="text-sky-400">P1</span>: <span id="score1">0</span></div>
                 <div><span id="name2" class="text-rose-400">P2</span>: <span id="score2">0</span></div>
@@ -98,13 +98,17 @@
                 <div id="board" class="grid grid-cols-3 gap-3 p-3 bg-white/5 rounded-3xl border border-white/5">
                     <script>for(let i=0; i<9; i++) document.write(`<button class="box w-20 h-20 md:w-28 md:h-28 glass-panel rounded-2xl text-4xl font-light flex items-center justify-center hover:bg-white/10"></button>`);</script>
                 </div>
-                <div id="winner-overlay" class="absolute inset-0 hidden flex items-center justify-center z-10">
-                    <h2 id="winner-text" class="text-xl md:text-2xl font-bold bg-black/10 px-8 py-4 rounded-2xl border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.2)]"></h2>
-                </div>
+<div id="winner-overlay" class="absolute inset-0 hidden flex flex-col items-center justify-center gap-4 z-10 bg-black/40 backdrop-blur-sm rounded-3xl">
+<div class="text-center text-xl md:text-2xl font-bold px-8 py-4 rounded-2xl border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.2)]"">
+        <h2 id="winner-text" ></h2>
+        <h1 >Wins!</h1>
+    </div>
+        <button id="nextround" class="px-6 py-2 rounded-xl border border-white/10 hover:bg-white hover:text-black transition-all text-[10px] md:text-xs uppercase tracking-widest">Next Round</button>
+</div>
             </div>
 
             <div class="flex gap-4">
-                <button id="newgame" class="px-6 py-2 rounded-xl border border-white/10 hover:bg-white hover:text-black transition-all text-[10px] md:text-xs uppercase tracking-widest">Next Round</button>
+                <button id="newgame" class="px-6 py-2 rounded-xl border border-white/10 hover:bg-white hover:text-black transition-all text-[10px] md:text-xs uppercase tracking-widest">New Game</button>
                 <button id="reset" class="px-6 py-2 rounded-xl border border-white/10 hover:bg-red-900/50 hover:border-red-500 transition-all text-[10px] md:text-xs uppercase tracking-widest">Reset All</button>
             </div>
         </div>
@@ -115,14 +119,19 @@
         const boxes = document.querySelectorAll(".box");
         const board = document.getElementById("board");
         const overlay = document.getElementById("winner-overlay");
-
+        const gameui= document.getElementById("game-ui");
+        const setup= document.getElementById("setup");
+        const name1= document.getElementById("name1");
+        const name2= document.getElementById("name2");
+        const p1 = document.getElementById("p1");
+        const p2 = document.getElementById("p2");
         document.getElementById("submit").onclick = () => {
-            p1N = document.getElementById("p1").value || "Player 1";
-            p2N = document.getElementById("p2").value || "Player 2";
-            document.getElementById("name1").innerText = p1N;
-            document.getElementById("name2").innerText = p2N;
-            document.getElementById("setup").classList.add("hidden");
-            document.getElementById("game-ui").classList.remove("hidden");
+            p1N = p1.value || "Player 1";
+            p2N = p2.value || "Player 2";
+            name1.innerText = p1N;
+            name2.innerText = p2N;
+            setup.classList.add("hidden");
+            gameui.classList.remove("hidden");
         };
 
         boxes.forEach(box => {
@@ -135,6 +144,8 @@
                 }
             };
         });
+const score1=document.getElementById("score1");
+const score2=document.getElementById("score2");
 
         function checkWinner() {
             const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
@@ -143,8 +154,8 @@
                 if(a && a === b && b === c) {
                     showWinner(a === 'O' ? p1N : p2N);
                     if(a === 'O') s1++; else s2++;
-                    document.getElementById("score1").innerText = s1;
-                    document.getElementById("score2").innerText = s2;
+                    score1.innerText = s1;
+                    score2.innerText = s2;
                     return;
                 }
             }
@@ -154,18 +165,35 @@
         function showWinner(text) {
             board.classList.add("blur-game");
             overlay.classList.remove("hidden");
-            document.getElementById("winner-text").innerText = text === "Draw" ? "Match Draw!" : text + " Wins!";
+            document.getElementById("winner-text").innerText = text === "Draw" ? "Match Draw!" : text ;
             boxes.forEach(b => b.disabled = true);
         }
+        const newtgamefn = () => {
+            board.classList.remove("blur-game");
+            overlay.classList.add("hidden");
+            boxes.forEach(b => { b.innerText = ""; b.disabled = false; b.classList.remove("text-sky-400", "text-rose-400"); });
+            turnO = true;
+            s1=0;
+            s2=0;
+            score1.innerHTML=s1;
+            score2.innerHTML=s2;
+        };
+        document.getElementById("newgame").onclick = newtgamefn
 
-        document.getElementById("newgame").onclick = () => {
+        document.getElementById("nextround").onclick = () => {
             board.classList.remove("blur-game");
             overlay.classList.add("hidden");
             boxes.forEach(b => { b.innerText = ""; b.disabled = false; b.classList.remove("text-sky-400", "text-rose-400"); });
             turnO = true;
         };
 
-        document.getElementById("reset").onclick = () => location.reload();
+        document.getElementById("reset").onclick = () => {
+            gameui.classList.add("hidden");
+            setup.classList.remove("hidden");
+            p1.value="";
+            p2.value="";
+            newtgamefn()
+        }
     </script>
 </body>
 </html>
